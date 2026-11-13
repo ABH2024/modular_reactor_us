@@ -1,0 +1,1318 @@
+{
+ "note": "neutral ids only; part A items of stimuli/stimuli_index.json and part B / C items of stimuli_partBC/stimuli_index.json (id = part letter + \"-\" + source id; the part B practice screen is not used); paths relative to the page",
+ "study_part": "all",
+ "slots_per_set": {
+  "r1": 2,
+  "r2": 3,
+  "rB": 2,
+  "rC": 2
+ },
+ "sound_check": {
+  "file": "stimuli_partBC/sound_check.m4a",
+  "duration_s": 6.0
+ },
+ "sources": {
+  "A": "stimuli/stimuli_index.json",
+  "BC": "stimuli_partBC/stimuli_index.json"
+ },
+ "items": [
+  {
+   "id": "A-s01",
+   "part": "A",
+   "group": "g06",
+   "role": "study",
+   "rotation_set": "r2",
+   "slot": 0,
+   "sides": {
+    "1": {
+     "left": "stimuli/s01_a.mp4",
+     "right": "stimuli/s01_b.mp4"
+    },
+    "2": {
+     "left": "stimuli/s01_b.mp4",
+     "right": "stimuli/s01_a.mp4"
+    }
+   },
+   "duration_s": 4.93,
+   "fps": 30.0,
+   "source_id": "s01"
+  },
+  {
+   "id": "A-s02",
+   "part": "A",
+   "group": "g08",
+   "role": "study",
+   "rotation_set": "r1",
+   "slot": 1,
+   "sides": {
+    "1": {
+     "left": "stimuli/s02_a.mp4",
+     "right": "stimuli/s02_b.mp4"
+    },
+    "2": {
+     "left": "stimuli/s02_b.mp4",
+     "right": "stimuli/s02_a.mp4"
+    }
+   },
+   "duration_s": 5.07,
+   "fps": 30.0,
+   "source_id": "s02"
+  },
+  {
+   "id": "A-s03",
+   "part": "A",
+   "group": "g09",
+   "role": "study",
+   "rotation_set": "r1",
+   "slot": 0,
+   "sides": {
+    "1": {
+     "left": "stimuli/s03_a.mp4",
+     "right": "stimuli/s03_b.mp4"
+    },
+    "2": {
+     "left": "stimuli/s03_b.mp4",
+     "right": "stimuli/s03_a.mp4"
+    }
+   },
+   "duration_s": 4.53,
+   "fps": 30.0,
+   "source_id": "s03"
+  },
+  {
+   "id": "A-s04",
+   "part": "A",
+   "group": "g02",
+   "role": "study",
+   "rotation_set": "r1",
+   "slot": 0,
+   "sides": {
+    "1": {
+     "left": "stimuli/s04_a.mp4",
+     "right": "stimuli/s04_b.mp4"
+    },
+    "2": {
+     "left": "stimuli/s04_b.mp4",
+     "right": "stimuli/s04_a.mp4"
+    }
+   },
+   "duration_s": 3.87,
+   "fps": 30.0,
+   "source_id": "s04"
+  },
+  {
+   "id": "A-s05",
+   "part": "A",
+   "group": "g12",
+   "role": "study",
+   "rotation_set": "r2",
+   "slot": 2,
+   "sides": {
+    "1": {
+     "left": "stimuli/s05_a.mp4",
+     "right": "stimuli/s05_b.mp4"
+    },
+    "2": {
+     "left": "stimuli/s05_b.mp4",
+     "right": "stimuli/s05_a.mp4"
+    }
+   },
+   "duration_s": 5.67,
+   "fps": 30.0,
+   "source_id": "s05"
+  },
+  {
+   "id": "A-s06",
+   "part": "A",
+   "group": "g09",
+   "role": "study",
+   "rotation_set": "r1",
+   "slot": 1,
+   "sides": {
+    "1": {
+     "left": "stimuli/s06_a.mp4",
+     "right": "stimuli/s06_b.mp4"
+    },
+    "2": {
+     "left": "stimuli/s06_b.mp4",
+     "right": "stimuli/s06_a.mp4"
+    }
+   },
+   "duration_s": 4.53,
+   "fps": 30.0,
+   "source_id": "s06"
+  },
+  {
+   "id": "A-s07",
+   "part": "A",
+   "group": "g03",
+   "role": "study",
+   "rotation_set": "r2",
+   "slot": 1,
+   "sides": {
+    "1": {
+     "left": "stimuli/s07_a.mp4",
+     "right": "stimuli/s07_b.mp4"
+    },
+    "2": {
+     "left": "stimuli/s07_b.mp4",
+     "right": "stimuli/s07_a.mp4"
+    }
+   },
+   "duration_s": 5.47,
+   "fps": 30.0,
+   "source_id": "s07"
+  },
+  {
+   "id": "A-s08",
+   "part": "A",
+   "group": "g07",
+   "role": "study",
+   "rotation_set": "r1",
+   "slot": 0,
+   "sides": {
+    "1": {
+     "left": "stimuli/s08_a.mp4",
+     "right": "stimuli/s08_b.mp4"
+    },
+    "2": {
+     "left": "stimuli/s08_b.mp4",
+     "right": "stimuli/s08_a.mp4"
+    }
+   },
+   "duration_s": 2.8,
+   "fps": 30.0,
+   "source_id": "s08"
+  },
+  {
+   "id": "A-s09",
+   "part": "A",
+   "group": "g07",
+   "role": "study",
+   "rotation_set": "r1",
+   "slot": 1,
+   "sides": {
+    "1": {
+     "left": "stimuli/s09_a.mp4",
+     "right": "stimuli/s09_b.mp4"
+    },
+    "2": {
+     "left": "stimuli/s09_b.mp4",
+     "right": "stimuli/s09_a.mp4"
+    }
+   },
+   "duration_s": 2.8,
+   "fps": 30.0,
+   "source_id": "s09"
+  },
+  {
+   "id": "A-s10",
+   "part": "A",
+   "group": "g10",
+   "role": "study",
+   "rotation_set": "r1",
+   "slot": 1,
+   "sides": {
+    "1": {
+     "left": "stimuli/s10_a.mp4",
+     "right": "stimuli/s10_b.mp4"
+    },
+    "2": {
+     "left": "stimuli/s10_b.mp4",
+     "right": "stimuli/s10_a.mp4"
+    }
+   },
+   "duration_s": 4.27,
+   "fps": 30.0,
+   "source_id": "s10"
+  },
+  {
+   "id": "A-s11",
+   "part": "A",
+   "group": "g04",
+   "role": "study",
+   "rotation_set": "r2",
+   "slot": 2,
+   "sides": {
+    "1": {
+     "left": "stimuli/s11_a.mp4",
+     "right": "stimuli/s11_b.mp4"
+    },
+    "2": {
+     "left": "stimuli/s11_b.mp4",
+     "right": "stimuli/s11_a.mp4"
+    }
+   },
+   "duration_s": 6.8,
+   "fps": 30.0,
+   "source_id": "s11"
+  },
+  {
+   "id": "A-s12",
+   "part": "A",
+   "group": "g12",
+   "role": "study",
+   "rotation_set": "r2",
+   "slot": 0,
+   "sides": {
+    "1": {
+     "left": "stimuli/s12_a.mp4",
+     "right": "stimuli/s12_b.mp4"
+    },
+    "2": {
+     "left": "stimuli/s12_b.mp4",
+     "right": "stimuli/s12_a.mp4"
+    }
+   },
+   "duration_s": 5.67,
+   "fps": 30.0,
+   "source_id": "s12"
+  },
+  {
+   "id": "A-s13",
+   "part": "A",
+   "group": "g14",
+   "role": "study",
+   "rotation_set": "r2",
+   "slot": 0,
+   "sides": {
+    "1": {
+     "left": "stimuli/s13_a.mp4",
+     "right": "stimuli/s13_b.mp4"
+    },
+    "2": {
+     "left": "stimuli/s13_b.mp4",
+     "right": "stimuli/s13_a.mp4"
+    }
+   },
+   "duration_s": 3.73,
+   "fps": 30.0,
+   "source_id": "s13"
+  },
+  {
+   "id": "A-s14",
+   "part": "A",
+   "group": "g03",
+   "role": "study",
+   "rotation_set": "r2",
+   "slot": 2,
+   "sides": {
+    "1": {
+     "left": "stimuli/s14_a.mp4",
+     "right": "stimuli/s14_b.mp4"
+    },
+    "2": {
+     "left": "stimuli/s14_b.mp4",
+     "right": "stimuli/s14_a.mp4"
+    }
+   },
+   "duration_s": 5.47,
+   "fps": 30.0,
+   "source_id": "s14"
+  },
+  {
+   "id": "A-s15",
+   "part": "A",
+   "group": "g13",
+   "role": "practice",
+   "rotation_set": "r1",
+   "sides": {
+    "1": {
+     "left": "stimuli/s15_a.mp4",
+     "right": "stimuli/s15_b.mp4"
+    },
+    "2": {
+     "left": "stimuli/s15_b.mp4",
+     "right": "stimuli/s15_a.mp4"
+    }
+   },
+   "duration_s": 4.4,
+   "fps": 30.0,
+   "source_id": "s15"
+  },
+  {
+   "id": "A-s16",
+   "part": "A",
+   "group": "g01",
+   "role": "study",
+   "rotation_set": "r2",
+   "slot": 2,
+   "sides": {
+    "1": {
+     "left": "stimuli/s16_a.mp4",
+     "right": "stimuli/s16_b.mp4"
+    },
+    "2": {
+     "left": "stimuli/s16_b.mp4",
+     "right": "stimuli/s16_a.mp4"
+    }
+   },
+   "duration_s": 4.13,
+   "fps": 30.0,
+   "source_id": "s16"
+  },
+  {
+   "id": "A-s17",
+   "part": "A",
+   "group": "g10",
+   "role": "study",
+   "rotation_set": "r1",
+   "slot": 0,
+   "sides": {
+    "1": {
+     "left": "stimuli/s17_a.mp4",
+     "right": "stimuli/s17_b.mp4"
+    },
+    "2": {
+     "left": "stimuli/s17_b.mp4",
+     "right": "stimuli/s17_a.mp4"
+    }
+   },
+   "duration_s": 4.27,
+   "fps": 30.0,
+   "source_id": "s17"
+  },
+  {
+   "id": "A-s18",
+   "part": "A",
+   "group": "g08",
+   "role": "study",
+   "rotation_set": "r1",
+   "slot": 0,
+   "sides": {
+    "1": {
+     "left": "stimuli/s18_a.mp4",
+     "right": "stimuli/s18_b.mp4"
+    },
+    "2": {
+     "left": "stimuli/s18_b.mp4",
+     "right": "stimuli/s18_a.mp4"
+    }
+   },
+   "duration_s": 5.07,
+   "fps": 30.0,
+   "source_id": "s18"
+  },
+  {
+   "id": "A-s19",
+   "part": "A",
+   "group": "g12",
+   "role": "study",
+   "rotation_set": "r2",
+   "slot": 1,
+   "sides": {
+    "1": {
+     "left": "stimuli/s19_a.mp4",
+     "right": "stimuli/s19_b.mp4"
+    },
+    "2": {
+     "left": "stimuli/s19_b.mp4",
+     "right": "stimuli/s19_a.mp4"
+    }
+   },
+   "duration_s": 5.67,
+   "fps": 30.0,
+   "source_id": "s19"
+  },
+  {
+   "id": "A-s20",
+   "part": "A",
+   "group": "g01",
+   "role": "study",
+   "rotation_set": "r2",
+   "slot": 0,
+   "sides": {
+    "1": {
+     "left": "stimuli/s20_a.mp4",
+     "right": "stimuli/s20_b.mp4"
+    },
+    "2": {
+     "left": "stimuli/s20_b.mp4",
+     "right": "stimuli/s20_a.mp4"
+    }
+   },
+   "duration_s": 4.13,
+   "fps": 30.0,
+   "source_id": "s20"
+  },
+  {
+   "id": "A-s21",
+   "part": "A",
+   "group": "g06",
+   "role": "study",
+   "rotation_set": "r2",
+   "slot": 2,
+   "sides": {
+    "1": {
+     "left": "stimuli/s21_a.mp4",
+     "right": "stimuli/s21_b.mp4"
+    },
+    "2": {
+     "left": "stimuli/s21_b.mp4",
+     "right": "stimuli/s21_a.mp4"
+    }
+   },
+   "duration_s": 4.93,
+   "fps": 30.0,
+   "source_id": "s21"
+  },
+  {
+   "id": "A-s22",
+   "part": "A",
+   "group": "g01",
+   "role": "study",
+   "rotation_set": "r2",
+   "slot": 1,
+   "sides": {
+    "1": {
+     "left": "stimuli/s22_a.mp4",
+     "right": "stimuli/s22_b.mp4"
+    },
+    "2": {
+     "left": "stimuli/s22_b.mp4",
+     "right": "stimuli/s22_a.mp4"
+    }
+   },
+   "duration_s": 4.13,
+   "fps": 30.0,
+   "source_id": "s22"
+  },
+  {
+   "id": "A-s23",
+   "part": "A",
+   "group": "g14",
+   "role": "study",
+   "rotation_set": "r2",
+   "slot": 2,
+   "sides": {
+    "1": {
+     "left": "stimuli/s23_a.mp4",
+     "right": "stimuli/s23_b.mp4"
+    },
+    "2": {
+     "left": "stimuli/s23_b.mp4",
+     "right": "stimuli/s23_a.mp4"
+    }
+   },
+   "duration_s": 3.73,
+   "fps": 30.0,
+   "source_id": "s23"
+  },
+  {
+   "id": "A-s24",
+   "part": "A",
+   "group": "g04",
+   "role": "study",
+   "rotation_set": "r2",
+   "slot": 1,
+   "sides": {
+    "1": {
+     "left": "stimuli/s24_a.mp4",
+     "right": "stimuli/s24_b.mp4"
+    },
+    "2": {
+     "left": "stimuli/s24_b.mp4",
+     "right": "stimuli/s24_a.mp4"
+    }
+   },
+   "duration_s": 6.8,
+   "fps": 30.0,
+   "source_id": "s24"
+  },
+  {
+   "id": "A-s25",
+   "part": "A",
+   "group": "g14",
+   "role": "study",
+   "rotation_set": "r2",
+   "slot": 1,
+   "sides": {
+    "1": {
+     "left": "stimuli/s25_a.mp4",
+     "right": "stimuli/s25_b.mp4"
+    },
+    "2": {
+     "left": "stimuli/s25_b.mp4",
+     "right": "stimuli/s25_a.mp4"
+    }
+   },
+   "duration_s": 3.73,
+   "fps": 30.0,
+   "source_id": "s25"
+  },
+  {
+   "id": "A-s26",
+   "part": "A",
+   "group": "g02",
+   "role": "study",
+   "rotation_set": "r1",
+   "slot": 1,
+   "sides": {
+    "1": {
+     "left": "stimuli/s26_a.mp4",
+     "right": "stimuli/s26_b.mp4"
+    },
+    "2": {
+     "left": "stimuli/s26_b.mp4",
+     "right": "stimuli/s26_a.mp4"
+    }
+   },
+   "duration_s": 3.87,
+   "fps": 30.0,
+   "source_id": "s26"
+  },
+  {
+   "id": "A-s27",
+   "part": "A",
+   "group": "g04",
+   "role": "study",
+   "rotation_set": "r2",
+   "slot": 0,
+   "sides": {
+    "1": {
+     "left": "stimuli/s27_a.mp4",
+     "right": "stimuli/s27_b.mp4"
+    },
+    "2": {
+     "left": "stimuli/s27_b.mp4",
+     "right": "stimuli/s27_a.mp4"
+    }
+   },
+   "duration_s": 6.8,
+   "fps": 30.0,
+   "source_id": "s27"
+  },
+  {
+   "id": "A-s28",
+   "part": "A",
+   "group": "g06",
+   "role": "study",
+   "rotation_set": "r2",
+   "slot": 1,
+   "sides": {
+    "1": {
+     "left": "stimuli/s28_a.mp4",
+     "right": "stimuli/s28_b.mp4"
+    },
+    "2": {
+     "left": "stimuli/s28_b.mp4",
+     "right": "stimuli/s28_a.mp4"
+    }
+   },
+   "duration_s": 4.93,
+   "fps": 30.0,
+   "source_id": "s28"
+  },
+  {
+   "id": "A-s30",
+   "part": "A",
+   "group": "g03",
+   "role": "study",
+   "rotation_set": "r2",
+   "slot": 0,
+   "sides": {
+    "1": {
+     "left": "stimuli/s30_a.mp4",
+     "right": "stimuli/s30_b.mp4"
+    },
+    "2": {
+     "left": "stimuli/s30_b.mp4",
+     "right": "stimuli/s30_a.mp4"
+    }
+   },
+   "duration_s": 5.47,
+   "fps": 30.0,
+   "source_id": "s30"
+  },
+  {
+   "id": "A-s31",
+   "part": "A",
+   "group": "g05",
+   "role": "study",
+   "rotation_set": "r1",
+   "slot": 0,
+   "sides": {
+    "1": {
+     "left": "stimuli/s31_a.mp4",
+     "right": "stimuli/s31_b.mp4"
+    },
+    "2": {
+     "left": "stimuli/s31_b.mp4",
+     "right": "stimuli/s31_a.mp4"
+    }
+   },
+   "duration_s": 3.33,
+   "fps": 30.0,
+   "source_id": "s31"
+  },
+  {
+   "id": "A-s32",
+   "part": "A",
+   "group": "g05",
+   "role": "study",
+   "rotation_set": "r1",
+   "slot": 1,
+   "sides": {
+    "1": {
+     "left": "stimuli/s32_a.mp4",
+     "right": "stimuli/s32_b.mp4"
+    },
+    "2": {
+     "left": "stimuli/s32_b.mp4",
+     "right": "stimuli/s32_a.mp4"
+    }
+   },
+   "duration_s": 3.33,
+   "fps": 30.0,
+   "source_id": "s32"
+  },
+  {
+   "id": "C-s02",
+   "part": "C",
+   "group": "g05",
+   "role": "study",
+   "rotation_set": "rC",
+   "slot": 1,
+   "sides": {
+    "1": {
+     "left": "stimuli_partBC/r02_a.mp4",
+     "right": "stimuli_partBC/r02_b.mp4",
+     "speaker": "stimuli_partBC/k02.mp4"
+    },
+    "2": {
+     "left": "stimuli_partBC/r02_b.mp4",
+     "right": "stimuli_partBC/r02_a.mp4",
+     "speaker": "stimuli_partBC/k02.mp4"
+    }
+   },
+   "duration_s": 15.68,
+   "fps": 25,
+   "width": 480,
+   "height": 480,
+   "speaker_width": 480,
+   "speaker_height": 480,
+   "source_id": "s02"
+  },
+  {
+   "id": "B-s03",
+   "part": "B",
+   "group": "g02",
+   "role": "study",
+   "rotation_set": "rB",
+   "slot": 1,
+   "sides": {
+    "1": {
+     "left": "stimuli_partBC/r03_a.mp4",
+     "right": "stimuli_partBC/r03_b.mp4",
+     "speaker": "stimuli_partBC/k11.mp4"
+    },
+    "2": {
+     "left": "stimuli_partBC/r03_b.mp4",
+     "right": "stimuli_partBC/r03_a.mp4",
+     "speaker": "stimuli_partBC/k11.mp4"
+    }
+   },
+   "duration_s": 15.68,
+   "fps": 25,
+   "width": 360,
+   "height": 480,
+   "speaker_width": 270,
+   "speaker_height": 480,
+   "source_id": "s03"
+  },
+  {
+   "id": "B-s04",
+   "part": "B",
+   "group": "g05",
+   "role": "study",
+   "rotation_set": "rB",
+   "slot": 0,
+   "sides": {
+    "1": {
+     "left": "stimuli_partBC/r04_a.mp4",
+     "right": "stimuli_partBC/r04_b.mp4",
+     "speaker": "stimuli_partBC/k03.mp4"
+    },
+    "2": {
+     "left": "stimuli_partBC/r04_b.mp4",
+     "right": "stimuli_partBC/r04_a.mp4",
+     "speaker": "stimuli_partBC/k03.mp4"
+    }
+   },
+   "duration_s": 15.68,
+   "fps": 25,
+   "width": 360,
+   "height": 480,
+   "speaker_width": 270,
+   "speaker_height": 480,
+   "source_id": "s04"
+  },
+  {
+   "id": "C-s05",
+   "part": "C",
+   "group": "g07",
+   "role": "study",
+   "rotation_set": "rC",
+   "slot": 1,
+   "sides": {
+    "1": {
+     "left": "stimuli_partBC/r05_a.mp4",
+     "right": "stimuli_partBC/r05_b.mp4",
+     "speaker": "stimuli_partBC/k09.mp4"
+    },
+    "2": {
+     "left": "stimuli_partBC/r05_b.mp4",
+     "right": "stimuli_partBC/r05_a.mp4",
+     "speaker": "stimuli_partBC/k09.mp4"
+    }
+   },
+   "duration_s": 15.68,
+   "fps": 25,
+   "width": 480,
+   "height": 480,
+   "speaker_width": 480,
+   "speaker_height": 480,
+   "source_id": "s05"
+  },
+  {
+   "id": "B-s06",
+   "part": "B",
+   "group": "g06",
+   "role": "study",
+   "rotation_set": "rB",
+   "slot": 0,
+   "sides": {
+    "1": {
+     "left": "stimuli_partBC/r06_a.mp4",
+     "right": "stimuli_partBC/r06_b.mp4",
+     "speaker": "stimuli_partBC/k07.mp4"
+    },
+    "2": {
+     "left": "stimuli_partBC/r06_b.mp4",
+     "right": "stimuli_partBC/r06_a.mp4",
+     "speaker": "stimuli_partBC/k07.mp4"
+    }
+   },
+   "duration_s": 15.68,
+   "fps": 25,
+   "width": 360,
+   "height": 480,
+   "speaker_width": 270,
+   "speaker_height": 480,
+   "source_id": "s06"
+  },
+  {
+   "id": "C-s07",
+   "part": "C",
+   "group": "g01",
+   "role": "study",
+   "rotation_set": "rC",
+   "slot": 1,
+   "sides": {
+    "1": {
+     "left": "stimuli_partBC/r07_a.mp4",
+     "right": "stimuli_partBC/r07_b.mp4",
+     "speaker": "stimuli_partBC/k04.mp4"
+    },
+    "2": {
+     "left": "stimuli_partBC/r07_b.mp4",
+     "right": "stimuli_partBC/r07_a.mp4",
+     "speaker": "stimuli_partBC/k04.mp4"
+    }
+   },
+   "duration_s": 15.68,
+   "fps": 25,
+   "width": 480,
+   "height": 480,
+   "speaker_width": 480,
+   "speaker_height": 480,
+   "source_id": "s07"
+  },
+  {
+   "id": "C-s08",
+   "part": "C",
+   "group": "g05",
+   "role": "study",
+   "rotation_set": "rC",
+   "slot": 0,
+   "sides": {
+    "1": {
+     "left": "stimuli_partBC/r08_a.mp4",
+     "right": "stimuli_partBC/r08_b.mp4",
+     "speaker": "stimuli_partBC/k02.mp4"
+    },
+    "2": {
+     "left": "stimuli_partBC/r08_b.mp4",
+     "right": "stimuli_partBC/r08_a.mp4",
+     "speaker": "stimuli_partBC/k02.mp4"
+    }
+   },
+   "duration_s": 15.68,
+   "fps": 25,
+   "width": 480,
+   "height": 480,
+   "speaker_width": 480,
+   "speaker_height": 480,
+   "source_id": "s08"
+  },
+  {
+   "id": "C-s09",
+   "part": "C",
+   "group": "g03",
+   "role": "study",
+   "rotation_set": "rC",
+   "slot": 0,
+   "sides": {
+    "1": {
+     "left": "stimuli_partBC/r09_a.mp4",
+     "right": "stimuli_partBC/r09_b.mp4",
+     "speaker": "stimuli_partBC/k10.mp4"
+    },
+    "2": {
+     "left": "stimuli_partBC/r09_b.mp4",
+     "right": "stimuli_partBC/r09_a.mp4",
+     "speaker": "stimuli_partBC/k10.mp4"
+    }
+   },
+   "duration_s": 15.68,
+   "fps": 25,
+   "width": 480,
+   "height": 480,
+   "speaker_width": 480,
+   "speaker_height": 480,
+   "source_id": "s09"
+  },
+  {
+   "id": "C-s10",
+   "part": "C",
+   "group": "g03",
+   "role": "study",
+   "rotation_set": "rC",
+   "slot": 1,
+   "sides": {
+    "1": {
+     "left": "stimuli_partBC/r10_a.mp4",
+     "right": "stimuli_partBC/r10_b.mp4",
+     "speaker": "stimuli_partBC/k10.mp4"
+    },
+    "2": {
+     "left": "stimuli_partBC/r10_b.mp4",
+     "right": "stimuli_partBC/r10_a.mp4",
+     "speaker": "stimuli_partBC/k10.mp4"
+    }
+   },
+   "duration_s": 15.68,
+   "fps": 25,
+   "width": 480,
+   "height": 480,
+   "speaker_width": 480,
+   "speaker_height": 480,
+   "source_id": "s10"
+  },
+  {
+   "id": "B-s11",
+   "part": "B",
+   "group": "g01",
+   "role": "study",
+   "rotation_set": "rB",
+   "slot": 1,
+   "sides": {
+    "1": {
+     "left": "stimuli_partBC/r11_a.mp4",
+     "right": "stimuli_partBC/r11_b.mp4",
+     "speaker": "stimuli_partBC/k08.mp4"
+    },
+    "2": {
+     "left": "stimuli_partBC/r11_b.mp4",
+     "right": "stimuli_partBC/r11_a.mp4",
+     "speaker": "stimuli_partBC/k08.mp4"
+    }
+   },
+   "duration_s": 15.68,
+   "fps": 25,
+   "width": 360,
+   "height": 480,
+   "speaker_width": 270,
+   "speaker_height": 480,
+   "source_id": "s11"
+  },
+  {
+   "id": "C-s13",
+   "part": "C",
+   "group": "g02",
+   "role": "study",
+   "rotation_set": "rC",
+   "slot": 0,
+   "sides": {
+    "1": {
+     "left": "stimuli_partBC/r13_a.mp4",
+     "right": "stimuli_partBC/r13_b.mp4",
+     "speaker": "stimuli_partBC/k14.mp4"
+    },
+    "2": {
+     "left": "stimuli_partBC/r13_b.mp4",
+     "right": "stimuli_partBC/r13_a.mp4",
+     "speaker": "stimuli_partBC/k14.mp4"
+    }
+   },
+   "duration_s": 15.68,
+   "fps": 25,
+   "width": 480,
+   "height": 480,
+   "speaker_width": 480,
+   "speaker_height": 480,
+   "source_id": "s13"
+  },
+  {
+   "id": "B-s14",
+   "part": "B",
+   "group": "g01",
+   "role": "study",
+   "rotation_set": "rB",
+   "slot": 0,
+   "sides": {
+    "1": {
+     "left": "stimuli_partBC/r14_a.mp4",
+     "right": "stimuli_partBC/r14_b.mp4",
+     "speaker": "stimuli_partBC/k08.mp4"
+    },
+    "2": {
+     "left": "stimuli_partBC/r14_b.mp4",
+     "right": "stimuli_partBC/r14_a.mp4",
+     "speaker": "stimuli_partBC/k08.mp4"
+    }
+   },
+   "duration_s": 15.68,
+   "fps": 25,
+   "width": 360,
+   "height": 480,
+   "speaker_width": 270,
+   "speaker_height": 480,
+   "source_id": "s14"
+  },
+  {
+   "id": "C-s15",
+   "part": "C",
+   "group": "g07",
+   "role": "study",
+   "rotation_set": "rC",
+   "slot": 0,
+   "sides": {
+    "1": {
+     "left": "stimuli_partBC/r15_a.mp4",
+     "right": "stimuli_partBC/r15_b.mp4",
+     "speaker": "stimuli_partBC/k09.mp4"
+    },
+    "2": {
+     "left": "stimuli_partBC/r15_b.mp4",
+     "right": "stimuli_partBC/r15_a.mp4",
+     "speaker": "stimuli_partBC/k09.mp4"
+    }
+   },
+   "duration_s": 15.68,
+   "fps": 25,
+   "width": 480,
+   "height": 480,
+   "speaker_width": 480,
+   "speaker_height": 480,
+   "source_id": "s15"
+  },
+  {
+   "id": "C-s16",
+   "part": "C",
+   "group": "g06",
+   "role": "study",
+   "rotation_set": "rC",
+   "slot": 1,
+   "sides": {
+    "1": {
+     "left": "stimuli_partBC/r16_a.mp4",
+     "right": "stimuli_partBC/r16_b.mp4",
+     "speaker": "stimuli_partBC/k06.mp4"
+    },
+    "2": {
+     "left": "stimuli_partBC/r16_b.mp4",
+     "right": "stimuli_partBC/r16_a.mp4",
+     "speaker": "stimuli_partBC/k06.mp4"
+    }
+   },
+   "duration_s": 15.68,
+   "fps": 25,
+   "width": 480,
+   "height": 480,
+   "speaker_width": 480,
+   "speaker_height": 480,
+   "source_id": "s16"
+  },
+  {
+   "id": "B-s18",
+   "part": "B",
+   "group": "g02",
+   "role": "study",
+   "rotation_set": "rB",
+   "slot": 0,
+   "sides": {
+    "1": {
+     "left": "stimuli_partBC/r18_a.mp4",
+     "right": "stimuli_partBC/r18_b.mp4",
+     "speaker": "stimuli_partBC/k11.mp4"
+    },
+    "2": {
+     "left": "stimuli_partBC/r18_b.mp4",
+     "right": "stimuli_partBC/r18_a.mp4",
+     "speaker": "stimuli_partBC/k11.mp4"
+    }
+   },
+   "duration_s": 15.68,
+   "fps": 25,
+   "width": 360,
+   "height": 480,
+   "speaker_width": 270,
+   "speaker_height": 480,
+   "source_id": "s18"
+  },
+  {
+   "id": "C-s19",
+   "part": "C",
+   "group": "g01",
+   "role": "study",
+   "rotation_set": "rC",
+   "slot": 0,
+   "sides": {
+    "1": {
+     "left": "stimuli_partBC/r19_a.mp4",
+     "right": "stimuli_partBC/r19_b.mp4",
+     "speaker": "stimuli_partBC/k04.mp4"
+    },
+    "2": {
+     "left": "stimuli_partBC/r19_b.mp4",
+     "right": "stimuli_partBC/r19_a.mp4",
+     "speaker": "stimuli_partBC/k04.mp4"
+    }
+   },
+   "duration_s": 15.68,
+   "fps": 25,
+   "width": 480,
+   "height": 480,
+   "speaker_width": 480,
+   "speaker_height": 480,
+   "source_id": "s19"
+  },
+  {
+   "id": "B-s20",
+   "part": "B",
+   "group": "g05",
+   "role": "study",
+   "rotation_set": "rB",
+   "slot": 1,
+   "sides": {
+    "1": {
+     "left": "stimuli_partBC/r20_a.mp4",
+     "right": "stimuli_partBC/r20_b.mp4",
+     "speaker": "stimuli_partBC/k03.mp4"
+    },
+    "2": {
+     "left": "stimuli_partBC/r20_b.mp4",
+     "right": "stimuli_partBC/r20_a.mp4",
+     "speaker": "stimuli_partBC/k03.mp4"
+    }
+   },
+   "duration_s": 15.68,
+   "fps": 25,
+   "width": 360,
+   "height": 480,
+   "speaker_width": 270,
+   "speaker_height": 480,
+   "source_id": "s20"
+  },
+  {
+   "id": "B-s21",
+   "part": "B",
+   "group": "g03",
+   "role": "study",
+   "rotation_set": "rB",
+   "slot": 0,
+   "sides": {
+    "1": {
+     "left": "stimuli_partBC/r21_a.mp4",
+     "right": "stimuli_partBC/r21_b.mp4",
+     "speaker": "stimuli_partBC/k13.mp4"
+    },
+    "2": {
+     "left": "stimuli_partBC/r21_b.mp4",
+     "right": "stimuli_partBC/r21_a.mp4",
+     "speaker": "stimuli_partBC/k13.mp4"
+    }
+   },
+   "duration_s": 15.68,
+   "fps": 25,
+   "width": 360,
+   "height": 480,
+   "speaker_width": 270,
+   "speaker_height": 480,
+   "source_id": "s21"
+  },
+  {
+   "id": "B-s22",
+   "part": "B",
+   "group": "g03",
+   "role": "study",
+   "rotation_set": "rB",
+   "slot": 1,
+   "sides": {
+    "1": {
+     "left": "stimuli_partBC/r22_a.mp4",
+     "right": "stimuli_partBC/r22_b.mp4",
+     "speaker": "stimuli_partBC/k13.mp4"
+    },
+    "2": {
+     "left": "stimuli_partBC/r22_b.mp4",
+     "right": "stimuli_partBC/r22_a.mp4",
+     "speaker": "stimuli_partBC/k13.mp4"
+    }
+   },
+   "duration_s": 15.68,
+   "fps": 25,
+   "width": 360,
+   "height": 480,
+   "speaker_width": 270,
+   "speaker_height": 480,
+   "source_id": "s22"
+  },
+  {
+   "id": "C-s23",
+   "part": "C",
+   "group": "g02",
+   "role": "study",
+   "rotation_set": "rC",
+   "slot": 1,
+   "sides": {
+    "1": {
+     "left": "stimuli_partBC/r23_a.mp4",
+     "right": "stimuli_partBC/r23_b.mp4",
+     "speaker": "stimuli_partBC/k14.mp4"
+    },
+    "2": {
+     "left": "stimuli_partBC/r23_b.mp4",
+     "right": "stimuli_partBC/r23_a.mp4",
+     "speaker": "stimuli_partBC/k14.mp4"
+    }
+   },
+   "duration_s": 15.68,
+   "fps": 25,
+   "width": 480,
+   "height": 480,
+   "speaker_width": 480,
+   "speaker_height": 480,
+   "source_id": "s23"
+  },
+  {
+   "id": "B-s24",
+   "part": "B",
+   "group": "g07",
+   "role": "study",
+   "rotation_set": "rB",
+   "slot": 1,
+   "sides": {
+    "1": {
+     "left": "stimuli_partBC/r24_a.mp4",
+     "right": "stimuli_partBC/r24_b.mp4",
+     "speaker": "stimuli_partBC/k12.mp4"
+    },
+    "2": {
+     "left": "stimuli_partBC/r24_b.mp4",
+     "right": "stimuli_partBC/r24_a.mp4",
+     "speaker": "stimuli_partBC/k12.mp4"
+    }
+   },
+   "duration_s": 15.68,
+   "fps": 25,
+   "width": 360,
+   "height": 480,
+   "speaker_width": 270,
+   "speaker_height": 480,
+   "source_id": "s24"
+  },
+  {
+   "id": "B-s25",
+   "part": "B",
+   "group": "g07",
+   "role": "study",
+   "rotation_set": "rB",
+   "slot": 0,
+   "sides": {
+    "1": {
+     "left": "stimuli_partBC/r25_a.mp4",
+     "right": "stimuli_partBC/r25_b.mp4",
+     "speaker": "stimuli_partBC/k12.mp4"
+    },
+    "2": {
+     "left": "stimuli_partBC/r25_b.mp4",
+     "right": "stimuli_partBC/r25_a.mp4",
+     "speaker": "stimuli_partBC/k12.mp4"
+    }
+   },
+   "duration_s": 15.68,
+   "fps": 25,
+   "width": 360,
+   "height": 480,
+   "speaker_width": 270,
+   "speaker_height": 480,
+   "source_id": "s25"
+  },
+  {
+   "id": "C-s26",
+   "part": "C",
+   "group": "g06",
+   "role": "study",
+   "rotation_set": "rC",
+   "slot": 0,
+   "sides": {
+    "1": {
+     "left": "stimuli_partBC/r26_a.mp4",
+     "right": "stimuli_partBC/r26_b.mp4",
+     "speaker": "stimuli_partBC/k06.mp4"
+    },
+    "2": {
+     "left": "stimuli_partBC/r26_b.mp4",
+     "right": "stimuli_partBC/r26_a.mp4",
+     "speaker": "stimuli_partBC/k06.mp4"
+    }
+   },
+   "duration_s": 15.68,
+   "fps": 25,
+   "width": 480,
+   "height": 480,
+   "speaker_width": 480,
+   "speaker_height": 480,
+   "source_id": "s26"
+  },
+  {
+   "id": "B-s27",
+   "part": "B",
+   "group": "g06",
+   "role": "study",
+   "rotation_set": "rB",
+   "slot": 1,
+   "sides": {
+    "1": {
+     "left": "stimuli_partBC/r27_a.mp4",
+     "right": "stimuli_partBC/r27_b.mp4",
+     "speaker": "stimuli_partBC/k07.mp4"
+    },
+    "2": {
+     "left": "stimuli_partBC/r27_b.mp4",
+     "right": "stimuli_partBC/r27_a.mp4",
+     "speaker": "stimuli_partBC/k07.mp4"
+    }
+   },
+   "duration_s": 15.68,
+   "fps": 25,
+   "width": 360,
+   "height": 480,
+   "speaker_width": 270,
+   "speaker_height": 480,
+   "source_id": "s27"
+  }
+ ]
+}
