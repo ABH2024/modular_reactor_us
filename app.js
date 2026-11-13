@@ -58,6 +58,46 @@ const ICON = {
 ICON.rewind = '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M6 6h2v12H6zM9.5 12l8.5 6V6z" fill="currentColor"/></svg>';
 function icon(e, name) { e.innerHTML = ICON[name]; }
 function screen(...kids) { if (app.classList) app.classList.remove('wide'); app.replaceChildren(...kids); window.scrollTo(0, 0); }
+function narrowOn() {
+  const D = (CFG && CFG.design) || {};
+  const bp = +D.narrow_breakpoint || 900, w = +((typeof window !== 'undefined' && window.innerWidth) || 0);
+  return !!D.narrow_layout && w > 0 && w < bp;
+}
+let PHONE_CSS = false;
+function phoneCss() {
+  if (PHONE_CSS || !CFG || !CFG.design || !CFG.design.narrow_layout || typeof document === 'undefined' || !document.head) return;
+  PHONE_CSS = true;
+  const bp = (+CFG.design.narrow_breakpoint || 900) - 1;
+  document.head.append(el('style', { id: 'phone-css' }, `@media (max-width: ${bp}px) {
+  main { padding: 12px 10px 28px; }
+  .card { padding: 14px 14px; }
+  .panel { padding: 8px 8px 4px; }
+  .pv-row { grid-template-columns: 1fr !important; }
+  .screen-title { font-size: 1.12rem; margin: 0 0 8px; }
+  fieldset.question { padding: 12px 12px 14px; }
+  button.choice { padding: 12px 4px; min-height: 44px; }
+  button.next { padding: 14px; }
+  button.ctl { width: 44px; height: 44px; }
+  .phone-hint { font-size: 0.85rem; color: #6f6c68; text-align: center; margin: 0 0 10px; }
+}`));
+}
+const screenBase = screen;
+screen = function (...kids) {
+  phoneCss();
+  if (S && S.device && !S.device.viewport && !S.preview) {
+    let coarse = null;
+    try { coarse = !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches); } catch (e) { coarse = null; }
+    S.device.viewport = { inner: `${window.innerWidth || 0}x${window.innerHeight || 0}`, outer: `${window.outerWidth || 0}x${window.outerHeight || 0}`,
+                          dpr: window.devicePixelRatio || null, touch_points: (typeof navigator !== 'undefined' && navigator.maxTouchPoints) || 0,
+                          coarse_pointer: coarse, narrow_layout: narrowOn() };
+  }
+  const isStage = kids[0] && kids[0].classList && kids[0].classList.contains('stage');
+  if (narrowOn() && !isStage) {
+    const t = (CFG.texts && CFG.texts.phone_hint) || 'Please hold your phone upright and use headphones or speakers.';
+    kids = [el('p', { class: 'phone-hint muted' }, t), ...kids];
+  }
+  screenBase(...kids);
+};
 function setProgress() {
   const bar = document.getElementById('topbar');
   if (!S || !S.plan) { bar.hidden = true; return; }
@@ -716,6 +756,21 @@ function trialIndependent(step) {
         testTools() ? testSkipButton(rec, leave) : ''))
   );
   if (wide && app.classList) app.classList.add('wide');
+  rec.layout = narrowOn() ? 'narrow' : 'wide';
+  rec.window = `${window.innerWidth || 0}x${window.innerHeight || 0}`;
+  if (rec.layout === 'narrow') {
+    const SIDEW = { left: (CFG.texts && CFG.texts.top) || 'Top', tie: T('tie'), right: (CFG.texts && CFG.texts.bottom) || 'Bottom' };
+    panel.setAttribute('style', 'max-width:100%');
+    panel.children[0].setAttribute('style', 'grid-template-columns:1fr');
+    for (const s of ['left', 'right']) {
+      P[s].box.children[1].textContent = SIDEW[s];
+      P[s].video.setAttribute('aria-label', SIDEW[s]);
+      P[s].video.setAttribute('style', 'display:block;width:100%;height:auto;max-height:38vh;object-fit:contain;background:#000;border-radius:4px');
+    }
+    const OPTSW = CFG.design.tie_option ? ['left', 'tie', 'right'] : ['left', 'right'];
+    for (const g of [...qGroups, ...(checkGroup ? [checkGroup] : [])]) g.btns.forEach((x, k) => { x.textContent = SIDEW[OPTSW[k]]; });
+    if (checkGroup) checkGroup.box.children[0].textContent = CFG.attention.text.replace('{answer}', SIDEW[step.check_answer]);
+  }
   update();
   preloadNext();
 }
@@ -855,6 +910,14 @@ function trialSpeaker(step) {
         testTools() ? testSkipButton(rec, leave) : ''))
   );
   if (wide && app.classList) app.classList.add('wide');
+  rec.layout = narrowOn() ? 'narrow' : 'wide';
+  rec.window = `${window.innerWidth || 0}x${window.innerHeight || 0}`;
+  if (rec.layout === 'narrow') {
+    panel.setAttribute('style', 'max-width:100%');
+    panel.children[0].setAttribute('style', 'display:flex;flex-direction:column;gap:10px;align-items:stretch');
+    panel.children[0].children[1].setAttribute('style', 'display:flex;flex-direction:column;gap:10px');
+    for (const v of [spk, P.left.video, P.right.video]) v.setAttribute('style', 'display:block;width:100%;height:27vh;object-fit:contain;background:transparent;border-radius:4px');
+  }
   update();
   preloadNext();
   const nx = S.plan.slice(S.pos + 1).find(p => p.kind === 'trial');

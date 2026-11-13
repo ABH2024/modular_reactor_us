@@ -59,7 +59,9 @@
     "independent_videos": true,
     "sound_check": false,
     "sound_check_before_part": "B",
-    "min_window_width": 1280,
+    "min_window_width": 360,
+    "narrow_layout": true,
+    "narrow_breakpoint": 900,
     "show_code": false,
     "about_link": false,
     "seed_rule": "seed = cyrb53 hash of the participant code; PRNG = mulberry32(seed). The same code always gives the same order, sides, and comparisons (open index_all.html?code=XXXX to reproduce). The part analyses rebuild the same plan in Python (analysis/study_plan_all.py) and check every answer file against it.",
@@ -117,7 +119,7 @@
     "sync_loading": "Loading…",
     "sync_stalled": "Loading…",
     "sync_play_blocked": "Click the play button to start.",
-    "narrow_window": "Please make the window wider (at least 1280 pixels).",
+    "narrow_window": "Please make the window wider (at least 360 pixels).",
     "play_both_together": "Play both from the start",
     "play_both_sequence": "Play both from the start (left, then right)",
     "next_button": "Next",
@@ -162,7 +164,8 @@
     "bottom": "Bottom",
     "speaker_label": "Speaker",
     "reactor_top_label": "Reactor (top)",
-    "reactor_bottom_label": "Reactor (bottom)"
+    "reactor_bottom_label": "Reactor (bottom)",
+    "phone_hint": "Please hold your phone upright and use headphones or speakers."
   },
   "attention": {
     "id": "attention_check",
