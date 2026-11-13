@@ -1,14 +1,13 @@
 {
  "note": "sha256 of the runtime files of the combined study page; instrument_sha256 = sha256 of the sorted JSON of \"files\"",
  "study_version": "v1-all-2026-11-12",
- "instrument_sha256": "26f63a1d4a214594d1b6e8634df6ac8dbb3ab386a4f011728f9214b7a6b51779",
- "n_files": 129,
+ "instrument_sha256": "8b8f8c04f39c74bf18cc1642e76689a1cfef688ae78d5a916cc6e6ab5d04cf71",
+ "n_files": 128,
  "files": {
   "index_all.html": "eb63bb354ff5f3f3f2c57cbf3a02f2cbdd67586dfd3ade132f692d7682322b98",
-  "app.js": "2861ae175387fb8baebccfe627276ce7c4edd1610c1c41308ab2d8bf822da3e7",
+  "app.js": "469dc8c19cc9ada87ab8f99fda60551d4054098572455faf27647b1399b97a4d",
   "style.css": "0132a018ab70c636f620325c79a2202dc992ce9356bad4b890e2595136f5df11",
-  "about_all.html": "0159a24943dde50e2aefcd352b0770fa5a9480696ea00371c8318cc22bf98028",
-  "config_all.json": "6180f55cb848f2d60d90141160b5ced92428d2dd7949ddfa87dc766b8e5ecfb8",
+  "config_all.json": "95aaa302b9d3e1e3d2a66bd47f027ae6a8ec59f9c2a88dd1a85153d9c9345982",
   "stimuli_index_all.json": "dc1171f453f46e1cf3be2ded29de9880f272c5f3c74abbebf5dd84b6e875589b",
   "stimuli_partBC/sound_check.m4a": "1d986ea50f0bd8bd752326956ef2b246e52b15ae58ece3269314790ef8593094",
   "stimuli/s01_a.mp4": "0e9c535fd9ab8465ab563066b5497eaffd74eb9135de49a935624ff960a61b6e",

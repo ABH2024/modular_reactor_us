@@ -31,7 +31,6 @@ moves more naturally (left / right, or top / bottom, or "no clear difference"). 
 | `manifest_all.json` | the list of all files with their checksums (the page records the version it ran) |
 | `stimuli/` | the Part A videos |
 | `stimuli_partBC/` | the Part B and C videos and the sound check |
-| `about_all.html` | a page explaining the study, to read after taking part |
 | `.nojekyll` | tells GitHub Pages to serve the files as they are |
 
 Video file names are neutral on purpose (`v01_a.mp4`, `r03_b.mp4`, `k05.mp4`): the page does not reveal which version is which.

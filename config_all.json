@@ -5,7 +5,7 @@
   "stimuli_index": "stimuli_index_all.json",
   "manifest": "manifest_all.json",
   "store_key": "reaction_study_state_all",
-  "about_page": "about_all.html",
+  "about_page": "",
   "credit": {
     "text": "Partner video: Seamless Interaction dataset, licence",
     "link_text": "CC BY-NC 4.0",
@@ -96,7 +96,7 @@
     }
   },
   "submit": {
-    "endpoint": "local",
+    "endpoint": "https://script.google.com/macros/s/AKfycbwaP4i4D2tSSF83vOBZn6_M6UZod2nl5JmyWLKbNW_3gp6_ZYxciPuyJUPUd7apcleE/exec",
     "local_hosts_only": true,
     "download_on_failure": true,
     "comment": "'local' = POST to /submit of scripts/local_server_all.py (answers saved on this machine). local_hosts_only: with 'local', the page POSTs only when it is served from 127.0.0.1 / localhost; on any other host (static web space) nothing is sent. download_on_failure: when there is no upload or it fails, the JSON download starts by itself (once) and the page asks the participant to send the file; the download button is always shown. A URL here (scripts/build_study_all.py --step config --submit_url URL) = POST the answers JSON there (Content-Type text/plain), download if it fails."

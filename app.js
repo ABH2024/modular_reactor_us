@@ -866,14 +866,9 @@ function trialSpeaker(step) {
     v.addEventListener('pause', () => stopSpeaker(s, 'pause'));
     v.addEventListener('ended', () => stopSpeaker(s, 'ended'));
     v.addEventListener('seeked', () => { if (active === s) spk.currentTime = v.currentTime; });
-    v.addEventListener('timeupdate', () => {   // 2026-11-13 (user: the speaker 'cuts'): no seek for small drifts; a rate nudge instead, a seek only beyond 400 ms and at most every 2 s
+    v.addEventListener('timeupdate', () => {   // 2026-11-13 (user: sound cuts): no correction during playback; the speaker is aligned only at play, pause, rewind and seek
       if (active !== s || v.paused) return;
-      const d = (+spk.currentTime || 0) - (+v.currentTime || 0), ad = Math.abs(d);
-      if (ad > 0.400) {
-        const now = performance.now();
-        if (!sp.last_seek_ms || now - sp.last_seek_ms > 2000) { spk.currentTime = v.currentTime; sp.last_seek_ms = now; sp.resyncs++; slog('resync', { with: s }); }
-      } else if (ad > 0.120) { spk.playbackRate = d > 0 ? 0.96 : 1.04; }
-      else if (spk.playbackRate !== 1) { spk.playbackRate = 1; }
+      if (spk.playbackRate !== 1) spk.playbackRate = 1;
     });
     figs[s] = el('figure', { class: 'pv', style: 'margin:0' }, label(LBL[s]), v, bar, p.errBox);
   }
