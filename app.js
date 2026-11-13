@@ -1,66 +1,16 @@
-/* user_study_site/app.js - the study page of every part (v3 of 2026-11-12). Plain JavaScript, no framework, no external file.
-   index.html loads it with config.json (Part A); index_partBC.html loads it with data-config="config_partBC.json" (Parts B/C).
-   Previous version (v1 2026-10-30 + the switches of 2026-11-09): app_old_2026-11-12.js. The plan (buildPlan, assignmentOf), the slots
-   and the answers format are unchanged (analysis/study_plan.py and analysis/study_plan_partBC.py mirror them); new answer keys only
-   ADD information (rec.sync, sound_check, auto_downloaded, device.window).
-   2026-11-12 (user decisions):
-   - one layout for every part (sober, light): a thin progress bar on top; a small-caps label (PART A - COMPARISON k OF n, or
-     PRACTICE); a title line; ONE framed panel with the two videos side by side (small Left / Right captions), one round play button
-     over the panel and ONE control bar below it (play / pause, progress, time, sound button when the part has sound); native controls
-     hidden, no seeking, replay allowed; one card per question (keyword in bold with **...** in the config, one-line hint, three equal
-     buttons Left / No clear difference / Right; the chosen one turns dark); the attention line as a third small card; a full-width
-     Next button. The questions are shown from the start (design.reveal_questions_in_order false) and unlock once both videos played
-     to the end (each video reached its end with >= 90 % of its 0.1-s bins played, as before); until then one grey note.
-   - the panel plays both videos TOGETHER: the LEFT video is the clock (and carries the sound when the part has sound), the RIGHT one
-     is muted and follows it: more than 40 ms off -> playbackRate 0.97 (ahead) / 1.03 (behind) until back within 15 ms; beyond 250 ms ->
-     re-seeked to the left time. Play is enabled when both videos can play through (or both can play after 10 s). A 'waiting' event on
-     either video pauses both ('Loading...'); both resume together from the left time when both can play. Starts, pauses, corrections,
-     re-seeks, stalls and sound toggles are logged in the screen's answers (rec.sync).
-   - parts.<P>.sync_pair (conversation parts): the page uses the full window width on comparison screens and each video is shown at
-     most at its native size (max-width from the stimulus index); the question cards stay in the central column; credit / parts.<P>.credit:
-     a licence credit line under the panel
-   - config file from the data-config attribute of the script tag (default config.json); store_key: own localStorage key;
-     design.code_prefix {server, random}: participant code prefixes (default P / R); design.sound_check: a sound check screen first
-   - submit.local_hosts_only: with endpoint 'local', POST only when served from 127.0.0.1 / localhost (nothing is sent to a static host);
-     submit.download_on_failure: when no upload happens or it fails, the JSON download starts by itself (once)
-   - about_page: the link on the last screen (default about.html); texts.welcome may be a list (one paragraph each); an EMPTY text hides
-     its line (welcome_title, consent_placeholder_banner, practice_intro, practice_done, sound_help, thanks, thanks_download,
-     download_csv, progress); an empty texts.how list hides the 'How it works' card
-   2026-11-12 (later; the combined page index_all.html + config_all.json: one rater does part A, then B, then C, one submission at the
-   end). Two new switches, absent from the older configs (whose behaviour is unchanged; copy before this edit: app_old2_2026-11-12.js):
-   - design.slot_groups [{parts, sets}]: per-part counterbalancing. The code carries ONE slot s; each group of parts uses its own slot
-     s mod (2 x the number of rotations of its rotation sets) with the rule below (rotation, offsets, side flip), so each part is balanced
-     exactly as on its own page; without a server the random slot is drawn in 0 .. (least common multiple of the group cycles) - 1.
-     Mirrored in analysis/study_plan_all.py.
-   - design.sound_check_before_part (a part letter): the sound check is shown once, just before that part's introduction.
-   2026-11-13 (user; copy before this edit: app_old3_2026-11-13.js). Two more additions, the older behaviour unchanged without them:
-   - design.independent_videos (default false): each video of a pair has its OWN control bar under it (play / pause, back to the start,
-     progress, time; a click on the video plays / pauses it) and, in the parts with sound, its own sound; no shared bar, no round play
-     button, no synchronised playback (no rec.sync). The answers still unlock once EACH video was played to the end at least once. Per
-     video, the answers keep plays, pauses, ended, coverage and now rewinds + a short event list (play / pause / rewind / ended).
-   - a test-only button 'Skip (test only)' under Next, shown only when the page is served from 127.0.0.1 / localhost or opened with
-     ?test=1 (?test=0 hides it on a local server): it leaves the screen without answers and marks the session test_mode: true (the
-     analyses quarantine every test session).
-   2026-11-13, later (user "go, keep speaker"; copy before this edit: app_old4_2026-11-13.js): the SPEAKER LAYOUT, per part
-   (parts.<P>.speaker_layout, or design.speaker_layout true / [parts] / {part: true}), used only when the stimulus index gives a speaker
-   file (sides.<v>.speaker): the partner video ONCE on the left ('Speaker', the only sound), the two compared reactions stacked on the
-   right ('Reactor (top)' = the stored side 'left', 'Reactor (bottom)' = 'right'), each with its own control bar; playing a reactor plays
-   the speaker with it (speaker time = reactor time on play, reset when more than 80 ms off, no rate nudging) and pauses the other reactor;
-   pausing / rewinding a reactor pauses / rewinds the speaker; answer buttons Top / No clear difference / Bottom, stored as left / tie /
-   right as before; the answers unlock once BOTH reactors were played to the end; rec.speaker_layout true + rec.speaker (file, plays,
-   pauses, resyncs, events).
-   Reads the config (design + all wording), the stimulus index (neutral stimulus ids) and the manifest (sha256 of the instrument files;
-   its hash is stored in every answer file). The method shown on each side is NOT known to this page (the key is kept outside the
-   published files, for the analysis only). */
+/* Study page logic. Loads the configuration (all texts and the design), the stimulus index and the manifest, and builds the
+   participant's plan from the participant code: counterbalanced assignment of the comparisons, seeded order of the screens and
+   sides of the videos. Shows the front page, the part introductions, the sound check and the comparison screens; controls the
+   playback of each video and unlocks the answers once every video was played to the end; records the answers and the playback
+   events, keeps the progress in the browser, sends the answers to the configured address and offers them as a file. */
 'use strict';
 
 const SCRIPT_TAG = (typeof document !== 'undefined' && document.currentScript) || null;
 const CONFIG_URL = (SCRIPT_TAG && SCRIPT_TAG.getAttribute && SCRIPT_TAG.getAttribute('data-config')) || 'config.json';
-let STORE_KEY = 'reaction_study_state_v1';                   // CFG.store_key replaces it once the config is loaded
-let CFG = null, INDEX = null, MANIFEST = null, S = null;   // config, stimulus index, manifest, participant state
+let STORE_KEY = 'reaction_study_state_v1';
+let CFG = null, INDEX = null, MANIFEST = null, S = null;
 const app = document.getElementById('app');
 
-/* ---------------- seeded random numbers (same code -> same plan) ---------------- */
 function cyrb53(str, seed = 0) {
   let h1 = 0xdeadbeef ^ seed, h2 = 0x41c6ce57 ^ seed;
   for (let i = 0; i < str.length; i++) { const ch = str.charCodeAt(i); h1 = Math.imul(h1 ^ ch, 2654435761); h2 = Math.imul(h2 ^ ch, 1597334677); }
@@ -79,15 +29,13 @@ function randomId(prefix, n) {
   return prefix + s.slice(0, 4) + '-' + s.slice(4);
 }
 
-/* ---------------- storage (never required: wrapped in try/catch) ---------------- */
-let PREVIEW = false;   // ?preview=<plan step> on 127.0.0.1 / localhost only: shows one screen of a test plan, saves nothing (layout checks)
-function save() { if (PREVIEW) return; try { localStorage.setItem(STORE_KEY, JSON.stringify(S)); } catch (e) { /* storage blocked: fine */ } }
+let PREVIEW = false;
+function save() { if (PREVIEW) return; try { localStorage.setItem(STORE_KEY, JSON.stringify(S)); } catch (e) { } }
 function load() { try { const t = localStorage.getItem(STORE_KEY); return t ? JSON.parse(t) : null; } catch (e) { return null; } }
-function archive() {   // keeps finished answers in a list, so a later participant on the same browser does not erase them
+function archive() {
   try { const k = STORE_KEY + '_done'; const L = JSON.parse(localStorage.getItem(k) || '[]'); L.push(S); localStorage.setItem(k, JSON.stringify(L)); } catch (e) { }
 }
 
-/* ---------------- helpers ---------------- */
 function el(tag, attrs = {}, ...kids) {
   const e = document.createElement(tag);
   for (const [k, v] of Object.entries(attrs)) {
@@ -98,16 +46,16 @@ function el(tag, attrs = {}, ...kids) {
   return e;
 }
 const T = k => (CFG.texts[k] !== undefined ? CFG.texts[k] : k);
-const rich = s => String(s).split(/\*\*(.+?)\*\*/).map((x, i) => (i % 2 ? el('strong', {}, x) : x));   // **keyword** -> bold
+const rich = s => String(s).split(/\*\*(.+?)\*\*/).map((x, i) => (i % 2 ? el('strong', {}, x) : x));
 const plain = s => String(s).replace(/\*\*(.+?)\*\*/g, '$1');
-const ICON = {   // constant inline icons (no external file)
+const ICON = {
   play: '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>',
   pause: '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z" fill="currentColor"/></svg>',
   replay: '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 5V2L7 6l5 4V7a5 5 0 1 1-5 5H5a7 7 0 1 0 7-7z" fill="currentColor"/></svg>',
   sound: '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9zM16 8.5a4.5 4.5 0 0 1 0 7M18.5 6a8 8 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M4 9v6h4l5 4V5L8 9z" fill="currentColor"/></svg>',
   mute: '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z" fill="currentColor"/><path d="M16 9l5 6M21 9l-5 6" stroke="currentColor" stroke-width="1.8"/></svg>'
 };
-ICON.rewind = '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M6 6h2v12H6zM9.5 12l8.5 6V6z" fill="currentColor"/></svg>';   // 2026-11-13
+ICON.rewind = '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M6 6h2v12H6zM9.5 12l8.5 6V6z" fill="currentColor"/></svg>';
 function icon(e, name) { e.innerHTML = ICON[name]; }
 function screen(...kids) { if (app.classList) app.classList.remove('wide'); app.replaceChildren(...kids); window.scrollTo(0, 0); }
 function setProgress() {
@@ -118,24 +66,19 @@ function setProgress() {
   document.getElementById('progress-text').textContent = T('progress') ? T('progress').replace('{i}', i).replace('{n}', n) : '';
   document.getElementById('progress-fill').style.width = (100 * S.pos / n).toFixed(1) + '%';
 }
-function browserName() {   // only the browser NAME (the consent names it); the full user-agent string is not stored
+function browserName() {
   const u = navigator.userAgent;
   if (/Edg\//.test(u)) return 'Edge'; if (/OPR\//.test(u)) return 'Opera'; if (/Firefox\//.test(u)) return 'Firefox';
   if (/Chrome\//.test(u) || /Chromium\//.test(u)) return 'Chrome'; if (/Safari\//.test(u)) return 'Safari'; return 'Other';
 }
-const ANSWER_LABEL = a => T(a);   // 'left' | 'right' | 'tie' -> the button text
-function creditLine(c) {          // licence credit of the partner videos (names the source of the videos, nothing else)
+const ANSWER_LABEL = a => T(a);
+function creditLine(c) {
   if (!c || !c.text) return '';
   return el('p', { class: 'credit' }, c.text + ' ', c.url ? el('a', { href: c.url, target: '_blank', rel: 'noopener noreferrer' }, c.link_text || c.url) : '',
             c.after || '');
 }
 const mmss = s => { s = Math.max(0, Math.floor(+s || 0)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
 
-/* ---------------- counterbalanced assignment (2026-11-09; mirrored in analysis/study_plan.py / study_plan_partBC.py) ----------------
-   slot s from the code (P<s>-XXXX-XXXX, or R<s>-... for a random slot; with design.code_prefix: <server><s>- / <random><s>-;
-   a code without a number: s = cyrb53(code) mod 2n); n = product of the comparisons per rotation set: rotation r = s mod n, offset of
-   each set in mixed radix (sets sorted); sides: flip = (s mod 2) XOR (floor(s / n) mod 2); study screen of rank k: variant 1 when
-   (k + flip) is even. */
 function prefixes() {
   const cp = (CFG && CFG.design && CFG.design.code_prefix) || null;
   if (cp && /^[A-Z]{1,4}$/.test(cp.server || '') && /^[A-Z]{1,4}$/.test(cp.random || '') && cp.server !== cp.random)
@@ -144,7 +87,7 @@ function prefixes() {
 }
 function nRotations() { const per = INDEX.slots_per_set || {}; return Object.keys(per).sort().reduce((a, s) => a * per[s], 1); }
 function assignmentOf(code) {
-  if (slotGroups()) return assignmentOfGroups(code);   // 2026-11-12: per-part counterbalancing (combined page)
+  if (slotGroups()) return assignmentOfGroups(code);
   const per = INDEX.slots_per_set || {}, sets = Object.keys(per).sort(), n = nRotations();
   const m = prefixes().re.exec(code);
   const slot = m ? parseInt(m[1], 10) : cyrb53(code) % (2 * n);
@@ -153,14 +96,12 @@ function assignmentOf(code) {
   for (const s of sets) { offsets[s] = Math.floor(rotation / radix) % per[s]; radix *= per[s]; }
   return { slot, slot_in_code: !!m, rotation, n_rotations: n, offsets, side_flip: (slot % 2) ^ (Math.floor(slot / n) % 2) };
 }
-/* per-part counterbalancing (design.slot_groups, 2026-11-12; mirrored in analysis/study_plan_all.py): group g = {parts, sets};
-   n_g = product of the comparisons of its sets; its slot = s mod 2 n_g; rotation, offsets and side flip of that slot as above */
 function slotGroups() {
   const G = CFG && CFG.design && CFG.design.assignment === 'counterbalanced' ? CFG.design.slot_groups : null;
   return Array.isArray(G) && G.length ? G : null;
 }
 function groupRotations(g) { return g.sets.reduce((a, s) => a * ((INDEX.slots_per_set || {})[s] || 1), 1); }
-function slotPeriod() {   // least common multiple of the group cycles (2 n_g): the range of a random slot and of a code-hash slot
+function slotPeriod() {
   const gcd = (a, b) => (b ? gcd(b, a % b) : a);
   return slotGroups().reduce((p, g) => { const c = 2 * groupRotations(g); return p / gcd(p, c) * c; }, 1);
 }
@@ -179,7 +120,7 @@ function assignmentOfGroups(code) {
   }
   return { slot, slot_in_code: !!m, period, offsets, side_flip_by_part, groups };
 }
-async function newCode(slotParam) {   // counterbalanced only: a new participant code that carries its slot
+async function newCode(slotParam) {
   const PF = prefixes();
   if (slotParam !== null && /^[0-9]{1,7}$/.test(slotParam)) return { code: randomId(`${PF.server}${parseInt(slotParam, 10)}-`, 8), source: 'url' };
   const ep = CFG.design.slot_endpoint;
@@ -193,19 +134,18 @@ async function newCode(slotParam) {   // counterbalanced only: a new participant
       const j = r.ok ? await r.json() : null;
       const m = PF.re.exec((j && j.code) || '');
       if (m && j.code.startsWith(PF.server) && parseInt(m[1], 10) === j.slot) return { code: j.code, source: 'server' };
-    } catch (e) { /* no slot server (static hosting, timeout): random slot below */ }
+    } catch (e) { }
   }
   const b = new Uint32Array(1); (window.crypto || window.msCrypto).getRandomValues(b);
-  if (slotGroups()) return { code: randomId(`${PF.random}${b[0] % slotPeriod()}-`, 8), source: 'random' };   // 2026-11-12
+  if (slotGroups()) return { code: randomId(`${PF.random}${b[0] % slotPeriod()}-`, 8), source: 'random' };
   return { code: randomId(`${PF.random}${b[0] % (2 * nRotations())}-`, 8), source: 'random' };
 }
 
-/* ---------------- the plan of one participant (mirrored in analysis/study_plan.py; unchanged) ---------------- */
 function buildPlan(code) {
-  if (slotGroups()) return buildPlanGroups(code);   // 2026-11-12: combined page (side pattern per slot group)
+  if (slotGroups()) return buildPlanGroups(code);
   const D = CFG.design, rng = mulberry32(cyrb53(code));
-  const A = D.assignment === 'counterbalanced' ? assignmentOf(code) : null;   // 2026-11-09; null = v1 (random rotation and sides)
-  const fixedVariant = {};                                                      // counterbalanced: item id -> variant of the side pattern
+  const A = D.assignment === 'counterbalanced' ? assignmentOf(code) : null;
+  const fixedVariant = {};
   const items = INDEX.items;
   const plan = [];
   const practice = items.find(it => it.role === 'practice');
@@ -234,10 +174,8 @@ function buildPlan(code) {
     plan.push({ kind: 'part', part: P });
     for (const it of trials) plan.push({ kind: 'trial', part: P, item: it });
   }
-  // left / right: the variant (1 or 2) of each trial; both variants hold the same pair with the sides swapped
   for (const p of plan) if (p.kind === 'trial') p.variant = !D.randomise_left_right ? '1'
     : (A ? (fixedVariant[p.item.id] || (A.side_flip ? '2' : '1')) : (rng() < 0.5 ? '1' : '2'));
-  // attention checks: the answer the extra line asks for
   const AA = CFG.attention.answers;
   for (const p of plan) if (p.kind === 'trial' && p.item.role === 'attention') p.check_answer = AA[Math.floor(rng() * AA.length)];
   return plan.map(p => p.kind === 'part' ? { kind: 'part', part: p.part } : {
@@ -246,8 +184,6 @@ function buildPlan(code) {
   });
 }
 
-/* the plan with design.slot_groups (2026-11-12, combined page; mirrored in analysis/study_plan_all.py): buildPlan's steps with the
-   offsets and the side flip of each part's slot group (needs unique item ids in the index) */
 function buildPlanGroups(code) {
   const D = CFG.design, rng = mulberry32(cyrb53(code));
   const A = assignmentOfGroups(code), flip = P => A.side_flip_by_part[P] || 0;
@@ -286,7 +222,6 @@ function buildPlanGroups(code) {
   });
 }
 
-/* ---------------- screens ---------------- */
 function welcome() {
   setProgress();
   const agree = el('input', { type: 'checkbox', id: 'agree' });
@@ -326,16 +261,15 @@ const screen_w = () => window.screen ? window.screen.width : 0, screen_h = () =>
 
 function howItWorks() {
   setProgress();
-  const hasPractice = (!S.plan || S.plan.some(p => p.practice)) && !!T('practice_intro');   // an empty practice_intro hides the card
+  const hasPractice = (!S.plan || S.plan.some(p => p.practice)) && !!T('practice_intro');
   screen(
-    CFG.design.show_code === false ? '' : el('div', { class: 'card' }, el('p', {}, T('code_label')), el('p', { class: 'code' }, S.code)),   // 2026-11-13: design.show_code false hides the code
+    CFG.design.show_code === false ? '' : el('div', { class: 'card' }, el('p', {}, T('code_label')), el('p', { class: 'code' }, S.code)),
     T('how').length ? el('div', { class: 'card' }, el('h2', {}, T('how_title')), el('ul', { class: 'how' }, T('how').map(t => el('li', {}, t)))) : '',
     hasPractice ? el('div', { class: 'card' }, el('h2', {}, T('practice_title')), el('p', {}, T('practice_intro'))) : '',
     el('div', { class: 'row center' }, el('button', { class: 'primary wide-btn', onclick: next }, T('part_button')))
   );
 }
 
-/* sound check (design.sound_check): the test sound must play to the end once before 'I can hear it' unlocks */
 function soundCheck() {
   setProgress();
   const sc = INDEX.sound_check || {};
@@ -369,7 +303,6 @@ function partIntro(P, afterPractice) {
   );
 }
 
-/* 2026-11-13: the test-only Skip button (127.0.0.1 / localhost, or ?test=1 on any host; ?test=0 hides it) */
 function testTools() {
   try {
     const q = new URLSearchParams(location.search).get('test');
@@ -377,7 +310,7 @@ function testTools() {
     return q === '1' || ['127.0.0.1', 'localhost'].includes(location.hostname);
   } catch (e) { return false; }
 }
-function testSkipButton(rec, leave) {   // leaves the screen without answers; the session is marked test_mode (quarantined by the analyses)
+function testSkipButton(rec, leave) {
   const b = el('button', { class: 'skip-test', type: 'button',
                            style: 'display:block;margin:10px auto 0;padding:4px 12px;font-size:0.8rem;color:#8a8783;background:none;border:1px dashed #cfcac3' },
                (CFG.texts && CFG.texts.test_skip) || 'Skip (test only)');
@@ -388,8 +321,6 @@ function testSkipButton(rec, leave) {   // leaves the screen without answers; th
   return b;
 }
 
-/* 2026-11-13 (design.independent_videos): the control bar of ONE video (play / pause, back to the start, progress, time); a click on the
-   video plays / pauses it; no seeking. Logs rewinds and play / pause / rewind / ended events in that video's record. */
 function ownControls(p, item) {
   const v = p.video, st = p.st, t0 = performance.now(), dur = (item && item.duration_s) || 0;
   st.rewinds = 0; st.events = []; st.events_dropped = 0;
@@ -427,17 +358,16 @@ function ownControls(p, item) {
   return el('div', { class: 'ctrlbar', style: 'width:100%' }, play, rew, el('div', { class: 'track' }, fill), time);
 }
 
-/* one video of the panel: no native controls; its own 'watched' tracking (end reached + >= 90 % of 0.1-s bins actually played) */
 function makePlayer(side, src, audio, onChange, maxWidth) {
   const st = { side, file: src, plays: 0, pauses: 0, seeks: 0, ended: 0, errors: 0, coverage: 0, watched: false, ms_to_watched: null };
   const t0 = performance.now();
-  const ctl = { rate: 1 };          // the only playback rate allowed (1 unless the sync logic nudges this video)
+  const ctl = { rate: 1 };
   const video = el('video', { src, preload: 'auto', playsinline: true, disablepictureinpicture: true, muted: audio ? null : true,
                               style: maxWidth ? `max-width:${maxWidth}px` : null,
                               'aria-label': side === 'left' ? T('left_video') : T('right_video') });
-  if (!audio) video.muted = true;   // no sound track (Part A) or the right video (the sound comes from the left one)
+  if (!audio) video.muted = true;
   const errBox = el('div', { class: 'verror', hidden: true });
-  let bins = null, last = null, closed = false;   // closed: the screen was left (events of the unloaded player are ignored)
+  let bins = null, last = null, closed = false;
   const binsReady = () => { if (!bins && isFinite(video.duration) && video.duration > 0) bins = new Uint8Array(Math.ceil(video.duration * 10)); return !!bins; };
   function mark(a, b) { if (!binsReady()) return; for (let i = Math.floor(a * 10); i < Math.min(bins.length, Math.ceil(b * 10)); i++) bins[i] = 1; }
   function check() {
@@ -448,7 +378,7 @@ function makePlayer(side, src, audio, onChange, maxWidth) {
   }
   video.addEventListener('timeupdate', () => {
     const t = video.currentTime;
-    if (!video.paused && last !== null && t > last && t - last < 0.75) mark(last, t);   // jumps (seeking) are not counted as watched
+    if (!video.paused && last !== null && t > last && t - last < 0.75) mark(last, t);
     last = t; check();
   });
   video.addEventListener('play', () => { st.plays++; last = video.currentTime; });
@@ -469,7 +399,6 @@ function makePlayer(side, src, audio, onChange, maxWidth) {
            box: el('figure', { class: 'pv' }, video, el('figcaption', {}, side === 'left' ? T('left_video') : T('right_video')), errBox) };
 }
 
-/* the panel: two videos played TOGETHER from one control bar; the LEFT one is the clock (and the sound), the RIGHT one follows it */
 function makePanel(P, rec, note, part, item) {
   const L = P.left, R = P.right, TH = 0.040, BACK = 0.015, HARD = 0.250, SLOW = 0.97, FAST = 1.03, MAX_EVENTS = 300;
   const t0 = performance.now();
@@ -512,11 +441,11 @@ function makePanel(P, rec, note, part, item) {
       else if (ms() >= 10000 && ready3(L.video) && ready3(R.video)) enablePlay('canplay_after_10s');
     } else if (state === 'stalled') tryResume();
   }
-  function blocked() {      // play() refused (autoplay rules): both stay paused, the participant resumes with a click
+  function blocked() {
     sy.play_blocked++; log('play_blocked');
     both(v => v.pause()); R.setRate(1); nudge = 0; state = 'paused'; note.hidden = false; note.textContent = T('sync_play_blocked'); render();
   }
-  function playBoth() {     // both from the left position
+  function playBoth() {
     if (Math.abs(R.video.currentTime - L.video.currentTime) > 0.001) R.video.currentTime = L.video.currentTime;
     let failed = false;
     for (const v of [L.video, R.video]) {
@@ -524,7 +453,7 @@ function makePanel(P, rec, note, part, item) {
       if (p && p.catch) p.catch(() => { if (!failed && !closed) { failed = true; blocked(); } });
     }
   }
-  function start() {        // both from the start (first play and replay)
+  function start() {
     rec.play_both++; sy.starts++;
     both(v => v.pause()); R.setRate(1); nudge = 0;
     both(v => { v.currentTime = 0; });
@@ -539,7 +468,7 @@ function makePanel(P, rec, note, part, item) {
   big.addEventListener('click', toggle);
   ctrl.addEventListener('click', toggle);
   if (snd) snd.addEventListener('click', () => { L.video.muted = !L.video.muted; sy.sound_toggles++; log(L.video.muted ? 'sound_off' : 'sound_on'); render(); });
-  function check() {        // at every time update of either video
+  function check() {
     if (closed || state !== 'playing' || L.video.paused || R.video.paused || L.video.ended || R.video.ended) return;
     const d = R.video.currentTime - L.video.currentTime, ad = Math.abs(d), adm = Math.round(ad * 1000), dm = Math.round(d * 1000);
     sy.samples++; sy.abs_drift_sum_ms += adm; if (adm > sy.abs_drift_max_ms) sy.abs_drift_max_ms = adm; if (ad > TH) sy.over_threshold++;
@@ -603,7 +532,7 @@ function choiceGroup(id, text, hint, rec, store, update, small) {
   return { box, btns };
 }
 
-function ratingGroup(side, rec, update) {   // v1 configs only (design.ratings); not used since 2026-11-07
+function ratingGroup(side, rec, update) {
   const name = `rate_${side}_${S.pos}`;
   const inputs = [1, 2, 3, 4, 5].map(v => el('input', { type: 'radio', name, value: v, disabled: true, id: `${name}_${v}` }));
   inputs.forEach(inp => inp.addEventListener('change', () => { rec.ratings[side] = Number(inp.value); update(); }));
@@ -612,7 +541,7 @@ function ratingGroup(side, rec, update) {   // v1 configs only (design.ratings);
   return { box, inputs };
 }
 
-function kicker(step) {     // PART A - COMPARISON k OF n (study + attention screens of the part, practice not counted), or PRACTICE
+function kicker(step) {
   if (step.practice) return T('kicker_practice');
   const mine = S.plan.filter(p => p.kind === 'trial' && !p.practice && p.part === step.part);
   const k = 1 + mine.indexOf(S.plan[S.pos]);
@@ -620,8 +549,8 @@ function kicker(step) {     // PART A - COMPARISON k OF n (study + attention scr
 }
 
 function trial(step) {
-  if (speakerLayoutOn(step)) return trialSpeaker(step);   // 2026-11-13: speaker layout (parts B / C)
-  if (CFG.design.independent_videos && !CFG.design.ratings) return trialIndependent(step);   // 2026-11-13: one control bar per video
+  if (speakerLayoutOn(step)) return trialSpeaker(step);
+  if (CFG.design.independent_videos && !CFG.design.ratings) return trialIndependent(step);
   const part = CFG.parts[step.part];
   const wide = !!part.sync_pair;
   const item = INDEX.items.find(it => it.id === step.item_id) || null;
@@ -651,8 +580,6 @@ function trial(step) {
     checkGroup = choiceGroup(CFG.attention.id, CFG.attention.text.replace('{answer}', ANSWER_LABEL(step.check_answer)), '', rec, checkStore, onAnswer, true);
   }
   const rateL = ratingGroup('left', rec, () => update()), rateR = ratingGroup('right', rec, () => update());
-  // questions in screen order (+ the attention line last); with design.reveal_questions_in_order a group is shown only when every
-  // group above it has an answer (since 2026-11-12 false: all shown from the start, locked until both videos played to the end)
   const inOrder = !!CFG.design.reveal_questions_in_order;
   const seq = [...qGroups.map((g, j) => ({ g, done: () => !!rec.answers[part.questions[j].id] })),
                ...(checkGroup ? [{ g: checkGroup, done: () => !!checkStore[CFG.attention.id] }] : [])];
@@ -705,15 +632,12 @@ function trial(step) {
       wide ? creditLine(part.credit || CFG.credit) : '',
       el('div', { class: 'qwrap' }, note, ...qGroups.map(g => g.box), checkGroup ? checkGroup.box : '', rating, skipBtn, nextBtn))
   );
-  if (testTools()) nextBtn.parentNode.append(testSkipButton(rec, leave));   // 2026-11-13: test only (127.0.0.1 / localhost / ?test=1)
+  if (testTools()) nextBtn.parentNode.append(testSkipButton(rec, leave));
   if (wide && app.classList) app.classList.add('wide');
   update();
   preloadNext();
 }
 
-/* 2026-11-13 (design.independent_videos): the comparison screen with two INDEPENDENT videos (copy of trial() without the shared panel):
-   each video has its own control bar and, in the parts with sound, its own sound (both files of a pair carry the same sound); no
-   synchronised playback, no rec.sync; the answers unlock once EACH video was played to the end at least once (makePlayer's rule). */
 function trialIndependent(step) {
   const part = CFG.parts[step.part];
   const wide = !!part.sync_pair;
@@ -796,7 +720,6 @@ function trialIndependent(step) {
   preloadNext();
 }
 
-/* 2026-11-13: the SPEAKER LAYOUT (see the note at the top). On when the part asks for it and the index item has a speaker file. */
 function speakerLayoutOn(step) {
   const item = INDEX.items.find(it => it.id === step.item_id);
   const sd = item && item.sides && item.sides[step.variant];
@@ -810,7 +733,7 @@ function trialSpeaker(step) {
   const item = INDEX.items.find(it => it.id === step.item_id) || null;
   const spkFile = item.sides[step.variant].speaker;
   const txt = (k, d) => (CFG.texts && CFG.texts[k]) || d;
-  const SIDE = { left: txt('top', 'Top'), tie: T('tie'), right: txt('bottom', 'Bottom') };   // stored values unchanged: left = top
+  const SIDE = { left: txt('top', 'Top'), tie: T('tie'), right: txt('bottom', 'Bottom') };
   const t0 = performance.now();
   const rec = { trial_no: S.pos, part: step.part, practice: step.practice, item_id: step.item_id, role: step.role, variant: step.variant,
                 files: { left: step.left, right: step.right }, answers: {}, ratings: {}, check: null, video: {}, play_both: 0,
@@ -828,7 +751,6 @@ function trialSpeaker(step) {
   rec.video = { left: P.left.st, right: P.right.st };
   const label = t => el('p', { class: 'kicker', style: 'margin:0 0 4px' }, t);
   const LBL = { left: txt('reactor_top_label', 'Reactor (top)'), right: txt('reactor_bottom_label', 'Reactor (bottom)') };
-  // the speaker: the partner video with the sound of both voices, no controls of its own; it follows the reactor that plays
   const spk = el('video', { src: spkFile, preload: 'auto', playsinline: true, disablepictureinpicture: true, 'aria-label': txt('speaker_label', 'Speaker'),
                             style: 'display:block;width:auto;max-width:100%;height:min(calc(64vh + 72px),480px);background:#000;border-radius:4px' });
   spk.addEventListener('contextmenu', e => e.preventDefault());
@@ -839,9 +761,9 @@ function trialSpeaker(step) {
     if (sp.events.length >= 100) { sp.events_dropped++; return; }
     sp.events.push(Object.assign({ kind, ms: Math.round(performance.now() - t0), t: Math.round(1000 * (+spk.currentTime || 0)) / 1000 }, extra || {}));
   };
-  let active = null;                                     // the reactor ('left' = top, 'right' = bottom) the speaker follows
+  let active = null;
   const other = s => (s === 'left' ? 'right' : 'left');
-  function follow(s) {                                   // play reactor s with the speaker; the other reactor pauses
+  function follow(s) {
     const v = P[s].video, o = P[other(s)].video;
     if (!o.paused) o.pause();
     active = s;
@@ -858,7 +780,7 @@ function trialSpeaker(step) {
     v.muted = true; v.setAttribute('aria-label', LBL[s]);
     v.style.cssText = 'display:block;width:auto;max-width:100%;height:min(32vh,320px);background:#000;border-radius:4px';
     const bar = ownControls(p, item);
-    const afterClick = () => { if (!v.paused) follow(s); else stopSpeaker(s, 'pause'); };   // inside the click: allowed to start the sound
+    const afterClick = () => { if (!v.paused) follow(s); else stopSpeaker(s, 'pause'); };
     bar.children[0].addEventListener('click', afterClick);
     v.addEventListener('click', afterClick);
     bar.children[1].addEventListener('click', () => { if (active === s) { spk.currentTime = v.currentTime; slog('rewind', { with: s }); } });
@@ -866,7 +788,7 @@ function trialSpeaker(step) {
     v.addEventListener('pause', () => stopSpeaker(s, 'pause'));
     v.addEventListener('ended', () => stopSpeaker(s, 'ended'));
     v.addEventListener('seeked', () => { if (active === s) spk.currentTime = v.currentTime; });
-    v.addEventListener('timeupdate', () => {   // 2026-11-13 (user: sound cuts): no correction during playback; the speaker is aligned only at play, pause, rewind and seek
+    v.addEventListener('timeupdate', () => {
       if (active !== s || v.paused) return;
       if (spk.playbackRate !== 1) spk.playbackRate = 1;
     });
@@ -879,8 +801,8 @@ function trialSpeaker(step) {
       el('div', { class: 'reactors', style: 'display:flex;flex-direction:column;gap:12px' }, figs.left, figs.right)));
 
   const onAnswer = (qid, a) => { if (qid) rec.answer_events.push({ q: qid, a, ms: Math.round(performance.now() - t0) }); update(); };
-  const OPTS = CFG.design.tie_option ? ['left', 'tie', 'right'] : ['left', 'right'];   // the order of choiceGroup's buttons
-  const relabel = g => { g.btns.forEach((x, k) => { x.textContent = SIDE[OPTS[k]]; }); return g; };   // Top / No clear difference / Bottom
+  const OPTS = CFG.design.tie_option ? ['left', 'tie', 'right'] : ['left', 'right'];
+  const relabel = g => { g.btns.forEach((x, k) => { x.textContent = SIDE[OPTS[k]]; }); return g; };
   const qGroups = part.questions.map(q => relabel(choiceGroup(q.id, q.text, q.hint, rec, rec.answers, onAnswer)));
   let checkGroup = null;
   if (step.role === 'attention') {
@@ -935,13 +857,13 @@ function trialSpeaker(step) {
   if (wide && app.classList) app.classList.add('wide');
   update();
   preloadNext();
-  const nx = S.plan.slice(S.pos + 1).find(p => p.kind === 'trial');   // also warm the next speaker file
+  const nx = S.plan.slice(S.pos + 1).find(p => p.kind === 'trial');
   const nxi = nx && INDEX.items.find(it => it.id === nx.item_id);
   const nsp = nxi && nxi.sides && nxi.sides[nx.variant] && nxi.sides[nx.variant].speaker;
   if (nsp && nsp !== spkFile) { const v = document.createElement('video'); v.preload = 'auto'; v.muted = true; v.src = nsp; }
 }
 
-function preloadNext() {   // warms the cache for the next screen's two videos
+function preloadNext() {
   const nx = S.plan.slice(S.pos + 1).find(p => p.kind === 'trial');
   if (!nx) return;
   for (const f of new Set([nx.left, nx.right])) { const v = document.createElement('video'); v.preload = 'auto'; v.muted = true; v.src = f; }
@@ -951,7 +873,7 @@ function next() {
   setProgress();
   if (S.pos >= S.plan.length) return finish();
   if (CFG.design.sound_check && INDEX.sound_check && !S.sound_check && !PREVIEW) return soundCheck();
-  const sb = CFG.design.sound_check_before_part, st0 = S.plan[S.pos];   // 2026-11-12: the sound check just before that part (combined page)
+  const sb = CFG.design.sound_check_before_part, st0 = S.plan[S.pos];
   if (sb && INDEX.sound_check && !S.sound_check && !PREVIEW && st0 && st0.kind === 'part' && st0.part === sb) return soundCheck();
   const step = S.plan[S.pos];
   if (step.kind === 'part') {
@@ -961,7 +883,6 @@ function next() {
   trial(step);
 }
 
-/* ---------------- end: upload (optional) + download ---------------- */
 function toCSV() {
   const head = ['code', 'session_id', 'study_version', 'manifest_sha256', 'trial_no', 'part', 'practice', 'item_id', 'role', 'variant',
                 'file_left', 'file_right', 'kind', 'question', 'answer', 'required_answer', 'plays_left', 'plays_right', 'watched_full',
@@ -998,13 +919,13 @@ function finish() {
       el('div', { class: 'row' },
         el('button', { onclick: () => download(base + '.json', JSON.stringify(S, null, 1), 'application/json') }, T('download_json')),
         T('download_csv') ? el('button', { onclick: () => download(base + '.csv', toCSV(), 'text/csv') }, T('download_csv')) : ''),
-      CFG.design.about_link === false ? '' : el('p', {}, el('a', { href: CFG.about_page || 'about.html' }, T('about_link'))))   // 2026-11-13: design.about_link false hides the link
+      CFG.design.about_link === false ? '' : el('p', {}, el('a', { href: CFG.about_page || 'about.html' }, T('about_link'))))
   );
   const SUB = CFG.submit || {};
   const ep = SUB.endpoint || '';
   let url = ep === 'local' ? 'submit' : ep;
-  if (ep === 'local' && SUB.local_hosts_only && !['127.0.0.1', 'localhost'].includes(location.hostname)) url = '';   // static host: send nothing
-  const autoDownload = () => {   // submit.download_on_failure: the JSON file is downloaded once without a click
+  if (ep === 'local' && SUB.local_hosts_only && !['127.0.0.1', 'localhost'].includes(location.hostname)) url = '';
+  const autoDownload = () => {
     if (!SUB.download_on_failure || S.auto_downloaded) return;
     S.auto_downloaded = new Date().toISOString(); save();
     download(base + '.json', JSON.stringify(S, null, 1), 'application/json');
@@ -1017,7 +938,6 @@ function finish() {
     .catch(() => { status.textContent = T('upload_failed').replace('{file}', base + '.json'); autoDownload(); });
 }
 
-/* ---------------- start ---------------- */
 async function main() {
   try {
     CFG = await (await fetch(CONFIG_URL, { cache: 'no-store' })).json();

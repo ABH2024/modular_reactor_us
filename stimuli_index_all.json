@@ -1,5 +1,4 @@
 {
- "note": "neutral ids only; part A items of stimuli/stimuli_index.json and part B / C items of stimuli_partBC/stimuli_index.json (id = part letter + \"-\" + source id; the part B practice screen is not used); paths relative to the page",
  "study_part": "all",
  "slots_per_set": {
   "r1": 2,
@@ -10,10 +9,6 @@
  "sound_check": {
   "file": "stimuli_partBC/sound_check.m4a",
   "duration_s": 6.0
- },
- "sources": {
-  "A": "stimuli/stimuli_index.json",
-  "BC": "stimuli_partBC/stimuli_index.json"
  },
  "items": [
   {

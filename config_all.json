@@ -12,18 +12,7 @@
     "url": "https://creativecommons.org/licenses/by-nc/4.0/",
     "after": ", cropped and placed next to a rendered animation."
   },
-  "sources": {
-    "A": {
-      "config": "config.json",
-      "study_version": "v3-partA-2026-11-12"
-    },
-    "BC": {
-      "config": "config_partBC.json",
-      "study_version": "v1-partBC-2026-11-13"
-    }
-  },
   "design": {
-    "comment": "Combined page (2026-11-12, user decision: one study, three parts; 2026-11-13: no attention screens): one rater does part A (two people, no sound: 1 practice + 12 study screens), then part B (conversations, body and hands, with sound: 6 study screens), then part C (faces, with sound: 6 study screens) = 25 screens with videos, + 3 part introductions and one sound check just before part B; one submission at the end. Items: stimuli_index_all.json (public files of stimuli/ and stimuli_partBC/; the part B practice screen and the attention screens of the separate pages are not used). Built by scripts/build_study_all.py --step config from config.json and config_partBC.json: questions, hints, introductions and part flags unchanged (part B introduction: one added line on the sound).",
     "assignment": "counterbalanced",
     "assignment_rule": "Slot s = 0, 1, 2, ... per participant, handed out in order by scripts/local_server_all.py (POST to slot_endpoint; code U<s>-XXXX-XXXX) or given in the link (?slot=s); if no server answers (static hosting) the page draws a random s in 0-23 (code UX<s>-XXXX-XXXX); a code without a slot number (tests only) uses s = cyrb53(code) mod 24. Per-part counterbalancing (design.slot_groups): part A uses the slot s mod 12 with the rule of config.json (rotation r = slot mod 6 over the sets r1, r2; side flip = (slot mod 2) XOR ((slot div 6) mod 2)); parts B and C use the slot s mod 8 with the rule of config_partBC.json (rotation r = slot mod 4 over the sets rB, rC; side flip = (slot mod 2) XOR ((slot div 4) mod 2)). Offsets in mixed radix over the sorted sets of the group; the source item of rank k in its set (group ids sorted) gets comparison (k + offset) mod (comparisons) and shows variant 1 when (k + the side flip of its part) is even; the practice screen shows variant 1 when the side flip of its part is 0. So each part is assigned exactly as on its own page with the slot s mod 12 (A) or s mod 8 (B, C): every block of 12 consecutive slots balances part A, every block of 8 parts B and C, every block of 24 all three. The order of the screens within each part is drawn from the code (cyrb53 + mulberry32, one sequence over the whole plan). analysis/study_plan_all.py mirrors this exactly.",
     "code_prefix": {
@@ -52,16 +41,14 @@
       }
     ],
     "slot_endpoint": "slot",
-    "slot_endpoint_comment": "relative URL of the slot counter of scripts/local_server_all.py (POST, answers {slot, code}). On a static host the POST fails (or there is no answer within 5 s) and the page draws a random slot (slot_source 'random'); links ?slot=0, ?slot=1, ... hand out slots in order without a server.",
     "reveal_questions_in_order": false,
-    "reveal_questions_comment": "2026-11-12 (user, v3 layout): false = both questions shown from the start, locked until both videos played to the end.",
     "part_order": [
       "A",
       "B",
       "C"
     ],
     "randomise_part_order": false,
-    "part_order_reason": "fixed A, B, C (user decision 2026-11-12); B before C as on the parts B / C page: part C shows the real body and head of every window, which could tell which part B video is real if seen first",
+    "part_order_reason": "fixed A, B, C; B before C as on the parts B / C page: part C shows the real body and head of every window, which could tell which part B video is real if seen first",
     "randomise_trial_order_within_part": true,
     "randomise_left_right": true,
     "include_attention_checks": false,
@@ -70,19 +57,15 @@
     "tie_option": true,
     "ratings": false,
     "independent_videos": true,
-    "independent_videos_comment": "2026-11-13 (user): each video of a pair has its own control bar (play / pause, back to the start, progress) and, in the parts with sound, its own sound; no shared bar, no synchronised playback; the answers unlock once each video was played to the end at least once. false = the shared bar of 2026-11-12.",
-    "speaker_layout_comment": "2026-11-13 (user): parts.<P>.speaker_layout = the partner video once on the left ('Speaker', the only sound), the two compared reactions stacked on the right ('Reactor', top / bottom, muted), each with its own control bar; playing a reactor plays the speaker with it (speaker time set to the reactor time on play, and again when more than 80 ms off), pausing / rewinding it pauses / rewinds the speaker; playing one reactor pauses the other; answers Top / No clear difference / Bottom, stored as left / tie / right (left = top); the answers unlock once both reactors were played to the end. Needs an index with speaker files (scripts/build_speaker_stimuli.py).",
     "sound_check": false,
     "sound_check_before_part": "B",
-    "sound_check_comment": "2026-11-12: one sound check, just before the part B introduction (design.sound_check_before_part); design.sound_check (a sound check before everything) is off",
     "min_window_width": 1280,
     "show_code": false,
     "about_link": false,
     "seed_rule": "seed = cyrb53 hash of the participant code; PRNG = mulberry32(seed). The same code always gives the same order, sides, and comparisons (open index_all.html?code=XXXX to reproduce). The part analyses rebuild the same plan in Python (analysis/study_plan_all.py) and check every answer file against it.",
-    "attention_check_rule": "none: 2026-11-13 (user, before any data): no attention screen in the combined study (design.include_attention_checks false); the separate pages keep theirs.",
+    "attention_check_rule": "none: no attention screen in the combined study (design.include_attention_checks false); the separate pages keep theirs.",
     "sync_rule": "parts with sync_pair: Play is enabled when both videos can play through (or both can play after 10 s); 'Play both from the start' starts both from 0; 'Pause both' / 'Resume both'; no native controls, no seeking. The LEFT video is the clock and carries the sound; the RIGHT one is muted. At every time update, if the right video is more than 40 ms off it gets playbackRate 0.97 (ahead) or 1.03 (behind) until it is back within 15 ms; beyond 250 ms it is re-seeked to the left time. A 'waiting' event on either video pauses both ('Loading...'); both resume together from the left time when both can play. Every start, pause, correction, re-seek and stall is logged in the screen's answers (sync).",
     "exclusion": {
-      "comment": "Fixed BEFORE any data (2026-11-12): the thresholds of config.json and config_partBC.json, applied PER PART (analysis/analysis_plan_all.json): a rater can be kept in one part and excluded in another. analysis/analyze_responses_partA.py keeps the part A screens of these files, analysis/analyze_responses_partBC.py the part B and C screens. 2026-11-13 (user, before any data): no attention screens; the per-part exclusion is reduced to skipped screens (test sessions and duplicates are quarantined).",
       "per_part": true,
       "max_failed_attention_checks": 0,
       "max_video_error_skips": 1,
@@ -90,7 +73,7 @@
       "rules": [
         "A file is QUARANTINED (not analysed, listed in quarantine_report) when: it is not valid JSON or not an answers file; it is synthetic (unless --allow_synthetic); its study_version differs from config_all.json; its manifest hash is not the one of manifest_all.json; it is unfinished; its stored plan differs from the plan rebuilt from its code; a planned screen is missing, duplicated or out of order; a variant or file does not match the plan; it is a pilot answer file; it is a test session (test_mode). In the screens of the analysed part(s): a comparison question is missing or holds a value outside left / right / tie; a video was not watched in full on a non-skipped screen (checked by the analysis of that part).",
         "Duplicates: files with the same participant code are reduced to ONE: the earliest valid finished file (started_at, then session_id, then file name); the others are quarantined as duplicates.",
-        "PER PART: a valid participant is EXCLUDED FROM A PART when they skip more than 1 screen(s) of that part because a video did not load; their other parts are kept (no attention screens since 2026-11-13).",
+        "PER PART: a valid participant is EXCLUDED FROM A PART when they skip more than 1 screen(s) of that part because a video did not load; their other parts are kept.",
         "No imputation: a screen skipped because a video did not load is left out; nothing is filled in."
       ]
     }
@@ -98,8 +81,7 @@
   "submit": {
     "endpoint": "https://script.google.com/macros/s/AKfycbwaP4i4D2tSSF83vOBZn6_M6UZod2nl5JmyWLKbNW_3gp6_ZYxciPuyJUPUd7apcleE/exec",
     "local_hosts_only": true,
-    "download_on_failure": true,
-    "comment": "'local' = POST to /submit of scripts/local_server_all.py (answers saved on this machine). local_hosts_only: with 'local', the page POSTs only when it is served from 127.0.0.1 / localhost; on any other host (static web space) nothing is sent. download_on_failure: when there is no upload or it fails, the JSON download starts by itself (once) and the page asks the participant to send the file; the download button is always shown. A URL here (scripts/build_study_all.py --step config --submit_url URL) = POST the answers JSON there (Content-Type text/plain), download if it fails."
+    "download_on_failure": true
   },
   "texts": {
     "welcome_title": "",
