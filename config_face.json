@@ -1,0 +1,174 @@
+{
+  "study_version": "v1-face-2026-11-16",
+  "consent_version": "consent-final-c7449313856d-face",
+  "title": "Modular Reactor User Study: faces",
+  "stimuli_index": "stimuli_index_face.json",
+  "manifest": "manifest_face.json",
+  "store_key": "reaction_study_state_face",
+  "credit": {
+    "text": "Partner video: Seamless Interaction dataset, licence",
+    "link_text": "CC BY-NC 4.0",
+    "url": "https://creativecommons.org/licenses/by-nc/4.0/",
+    "after": ", cropped and placed next to a rendered animation."
+  },
+  "design": {
+    "assignment": "counterbalanced",
+    "assignment_rule": "Slot s = 0, 1, 2, ... per participant (scripts/local_server_face.py, code F<s>-XXXX-XXXX; ?slot=s; without a server a random s in 0-3, code FX<s>-XXXX-XXXX). Rotation r = s mod 2: the window of rank k (group ids sorted) shows comparison (k + r) mod 2; side flip = (s mod 2) XOR ((s div 2) mod 2): variant 1 when (k + flip) is even. Every block of 4 slots shows each window x comparison equally often in both variants. Screen order from the code (cyrb53 + mulberry32). analysis/study_plan_all.py mirrors it.",
+    "code_prefix": {
+      "server": "F",
+      "random": "FX"
+    },
+    "slot_endpoint": "slot",
+    "reveal_questions_in_order": false,
+    "part_order": [
+      "F"
+    ],
+    "randomise_part_order": false,
+    "randomise_trial_order_within_part": true,
+    "randomise_left_right": true,
+    "include_attention_checks": false,
+    "require_full_view": true,
+    "full_view_rule": "each of the two videos must reach its end (ended event, or currentTime >= duration - 0.2 s) with at least 90 % of its length actually played (0.1-s bins), at least once; then the questions unlock",
+    "tie_option": true,
+    "ratings": false,
+    "independent_videos": true,
+    "sound_check": true,
+    "min_window_width": 360,
+    "narrow_layout": true,
+    "narrow_breakpoint": 900,
+    "show_code": false,
+    "about_link": false,
+    "seed_rule": "seed = cyrb53 hash of the participant code; PRNG = mulberry32(seed): the same code gives the same order, sides and comparisons (index_face.html?code=XXXX). analysis/analyze_responses_face.py rebuilds the plan (analysis/study_plan_all.py).",
+    "attention_check_rule": "none (no attention screen in the face study)",
+    "exclusion": {
+      "max_failed_attention_checks": 0,
+      "max_video_error_skips": 1,
+      "require_complete_plan": true,
+      "rules": [
+        "Quarantined: not an answers file, synthetic, other study_version or instrument, unfinished, stored plan different from the rebuilt plan, a screen missing / out of order, answers missing or invalid, videos not played to the end, duplicate code (the earliest file kept), pilot files, test sessions (test_mode).",
+        "Excluded: more than 1 screen skipped because a video did not load."
+      ]
+    }
+  },
+  "submit": {
+    "endpoint": "https://script.google.com/macros/s/AKfycbwaP4i4D2tSSF83vOBZn6_M6UZod2nl5JmyWLKbNW_3gp6_ZYxciPuyJUPUd7apcleE/exec",
+    "local_hosts_only": true,
+    "download_on_failure": true
+  },
+  "texts": {
+    "welcome_title": "",
+    "welcome": [
+      "The purpose of this user study is to include human judgement in the evaluation of our results. It takes about 6 minutes.",
+      "You will see short conversation clips: the real partner on the left, and on the right two versions of a grey face that reacts to them. For each pair, you choose which face reacts more appropriately and which one moves more naturally: top, bottom, or no clear difference.",
+      "Please do not judge the quality of the mesh or the visual appearance. Base your answers only on the movement.",
+      "Your answers are anonymous: no personal information is collected, only your choices and a random participant code."
+    ],
+    "consent_title": "Consent",
+    "consent_placeholder_banner": "",
+    "consent": "Taking part is voluntary. You can stop at any time by closing the page.",
+    "consent_checkbox": "I agree to take part.",
+    "start_button": "Start",
+    "code_label": "Your code (keep it to withdraw your answers):",
+    "how_title": "How it works",
+    "how": [
+      "First a short sound check, then 6 comparisons of about 16 seconds each."
+    ],
+    "practice_title": "Practice",
+    "practice_intro": "",
+    "practice_done": "",
+    "sound_title": "Sound check",
+    "sound_text": "Play the test sound and set a comfortable volume.",
+    "sound_play": "Play the test sound",
+    "sound_ok": "I can hear it",
+    "sound_done": "",
+    "sound_help": "",
+    "sound_blocked": "The sound did not start: click again.",
+    "sound_error": "The test sound could not be loaded; you can continue.",
+    "sync_play": "Play both from the start",
+    "sync_pause": "Pause both",
+    "sync_resume": "Resume both",
+    "sync_loading": "Loading…",
+    "sync_stalled": "Loading…",
+    "sync_play_blocked": "Click the play button to start.",
+    "narrow_window": "Please make the window wider (at least 360 pixels).",
+    "play_both_together": "Play both from the start",
+    "play_both_sequence": "Play both from the start (left, then right)",
+    "next_button": "Next",
+    "left": "Left",
+    "right": "Right",
+    "tie": "No clear difference",
+    "left_video": "Left",
+    "right_video": "Right",
+    "not_watched": "",
+    "watched": "Played",
+    "wait_for_end": "Play the videos to the end to answer",
+    "answer_all": "",
+    "play_blocked": "Click 'Play both from the start'.",
+    "video_error": "This video could not be loaded.",
+    "video_retry": "Try again",
+    "video_skip": "Skip this screen",
+    "progress": "",
+    "part_button": "Continue",
+    "thanks_title": "Thank you!",
+    "thanks": "You have finished.",
+    "thanks_download": "",
+    "download_json": "Download my answers",
+    "download_csv": "",
+    "uploading": "Saving...",
+    "uploaded_ok": "Your answers are saved.",
+    "upload_failed": "Please send the downloaded file {file} to the researcher.",
+    "no_upload": "Your answers are saved in this browser only.",
+    "no_upload_download": "Please send the downloaded file {file} to the researcher.",
+    "about_link": "About this study",
+    "resume": "You started this study before in this browser. Continue where you stopped? (The screen you were on starts again.)",
+    "resume_yes": "Continue",
+    "resume_no": "Start again (new code)",
+    "kicker": "COMPARISON {k} OF {n}",
+    "kicker_practice": "PRACTICE",
+    "screen_title": "Which reaction is better?",
+    "aria_play": "Play both videos",
+    "aria_pause": "Pause both videos",
+    "aria_replay": "Play both videos again from the start",
+    "aria_sound_on": "Sound on",
+    "aria_sound_off": "Sound off",
+    "top": "Top",
+    "bottom": "Bottom",
+    "speaker_label": "Speaker",
+    "reactor_top_label": "Reactor (top)",
+    "reactor_bottom_label": "Reactor (bottom)",
+    "phone_hint": "Please hold your phone upright and use headphones or speakers."
+  },
+  "attention": {
+    "id": "attention_check",
+    "text": "Attention check: for this line only, please click \"{answer}\".",
+    "answers": [
+      "left",
+      "right",
+      "tie"
+    ]
+  },
+  "parts": {
+    "F": {
+      "title": "Faces",
+      "intro": [
+        "Close-up: left the real partner's face (Speaker); right, top and bottom, two versions of the GREY face (Reactor).",
+        "Play each reactor with the speaker. Only the face is shown, always facing forward; only the expression differs."
+      ],
+      "audio": true,
+      "sync_pair": true,
+      "speaker_layout": true,
+      "questions": [
+        {
+          "id": "q1_response",
+          "text": "Which face reacts **better** to the partner, while listening and while speaking?",
+          "hint": "Expressions at the right moment; a face alive with its own voice."
+        },
+        {
+          "id": "q2_natural",
+          "text": "Which face moves **more naturally**?",
+          "hint": "Smooth expressions, no frozen or jerky face; the mouth follows the voice."
+        }
+      ]
+    }
+  }
+}

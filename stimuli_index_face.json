@@ -1,0 +1,326 @@
+{
+ "study_part": "F",
+ "layout": "speaker",
+ "panel": "mask",
+ "slots_per_set": {
+  "rF": 2
+ },
+ "sound_check": {
+  "file": "stimuli_face/sound_check.m4a",
+  "duration_s": 6.0
+ },
+ "items": [
+  {
+   "id": "s01",
+   "part": "F",
+   "group": "g05",
+   "role": "study",
+   "rotation_set": "rF",
+   "slot": 1,
+   "sides": {
+    "1": {
+     "left": "stimuli_face/r01_a.mp4",
+     "right": "stimuli_face/r01_b.mp4",
+     "speaker": "stimuli_face/k03.mp4"
+    },
+    "2": {
+     "left": "stimuli_face/r01_b.mp4",
+     "right": "stimuli_face/r01_a.mp4",
+     "speaker": "stimuli_face/k03.mp4"
+    }
+   },
+   "duration_s": 15.68,
+   "fps": 25,
+   "width": 480,
+   "height": 480,
+   "speaker_width": 480,
+   "speaker_height": 480
+  },
+  {
+   "id": "s02",
+   "part": "F",
+   "group": "g02",
+   "role": "study",
+   "rotation_set": "rF",
+   "slot": 1,
+   "sides": {
+    "1": {
+     "left": "stimuli_face/r02_a.mp4",
+     "right": "stimuli_face/r02_b.mp4",
+     "speaker": "stimuli_face/k04.mp4"
+    },
+    "2": {
+     "left": "stimuli_face/r02_b.mp4",
+     "right": "stimuli_face/r02_a.mp4",
+     "speaker": "stimuli_face/k04.mp4"
+    }
+   },
+   "duration_s": 15.68,
+   "fps": 25,
+   "width": 480,
+   "height": 480,
+   "speaker_width": 480,
+   "speaker_height": 480
+  },
+  {
+   "id": "s03",
+   "part": "F",
+   "group": "g02",
+   "role": "study",
+   "rotation_set": "rF",
+   "slot": 0,
+   "sides": {
+    "1": {
+     "left": "stimuli_face/r03_a.mp4",
+     "right": "stimuli_face/r03_b.mp4",
+     "speaker": "stimuli_face/k04.mp4"
+    },
+    "2": {
+     "left": "stimuli_face/r03_b.mp4",
+     "right": "stimuli_face/r03_a.mp4",
+     "speaker": "stimuli_face/k04.mp4"
+    }
+   },
+   "duration_s": 15.68,
+   "fps": 25,
+   "width": 480,
+   "height": 480,
+   "speaker_width": 480,
+   "speaker_height": 480
+  },
+  {
+   "id": "s04",
+   "part": "F",
+   "group": "g05",
+   "role": "study",
+   "rotation_set": "rF",
+   "slot": 0,
+   "sides": {
+    "1": {
+     "left": "stimuli_face/r04_a.mp4",
+     "right": "stimuli_face/r04_b.mp4",
+     "speaker": "stimuli_face/k03.mp4"
+    },
+    "2": {
+     "left": "stimuli_face/r04_b.mp4",
+     "right": "stimuli_face/r04_a.mp4",
+     "speaker": "stimuli_face/k03.mp4"
+    }
+   },
+   "duration_s": 15.68,
+   "fps": 25,
+   "width": 480,
+   "height": 480,
+   "speaker_width": 480,
+   "speaker_height": 480
+  },
+  {
+   "id": "s05",
+   "part": "F",
+   "group": "g04",
+   "role": "study",
+   "rotation_set": "rF",
+   "slot": 1,
+   "sides": {
+    "1": {
+     "left": "stimuli_face/r05_a.mp4",
+     "right": "stimuli_face/r05_b.mp4",
+     "speaker": "stimuli_face/k06.mp4"
+    },
+    "2": {
+     "left": "stimuli_face/r05_b.mp4",
+     "right": "stimuli_face/r05_a.mp4",
+     "speaker": "stimuli_face/k06.mp4"
+    }
+   },
+   "duration_s": 15.68,
+   "fps": 25,
+   "width": 480,
+   "height": 480,
+   "speaker_width": 480,
+   "speaker_height": 480
+  },
+  {
+   "id": "s06",
+   "part": "F",
+   "group": "g01",
+   "role": "study",
+   "rotation_set": "rF",
+   "slot": 0,
+   "sides": {
+    "1": {
+     "left": "stimuli_face/r06_a.mp4",
+     "right": "stimuli_face/r06_b.mp4",
+     "speaker": "stimuli_face/k01.mp4"
+    },
+    "2": {
+     "left": "stimuli_face/r06_b.mp4",
+     "right": "stimuli_face/r06_a.mp4",
+     "speaker": "stimuli_face/k01.mp4"
+    }
+   },
+   "duration_s": 15.68,
+   "fps": 25,
+   "width": 480,
+   "height": 480,
+   "speaker_width": 480,
+   "speaker_height": 480
+  },
+  {
+   "id": "s07",
+   "part": "F",
+   "group": "g06",
+   "role": "study",
+   "rotation_set": "rF",
+   "slot": 0,
+   "sides": {
+    "1": {
+     "left": "stimuli_face/r07_a.mp4",
+     "right": "stimuli_face/r07_b.mp4",
+     "speaker": "stimuli_face/k02.mp4"
+    },
+    "2": {
+     "left": "stimuli_face/r07_b.mp4",
+     "right": "stimuli_face/r07_a.mp4",
+     "speaker": "stimuli_face/k02.mp4"
+    }
+   },
+   "duration_s": 15.68,
+   "fps": 25,
+   "width": 480,
+   "height": 480,
+   "speaker_width": 480,
+   "speaker_height": 480
+  },
+  {
+   "id": "s08",
+   "part": "F",
+   "group": "g04",
+   "role": "study",
+   "rotation_set": "rF",
+   "slot": 0,
+   "sides": {
+    "1": {
+     "left": "stimuli_face/r08_a.mp4",
+     "right": "stimuli_face/r08_b.mp4",
+     "speaker": "stimuli_face/k06.mp4"
+    },
+    "2": {
+     "left": "stimuli_face/r08_b.mp4",
+     "right": "stimuli_face/r08_a.mp4",
+     "speaker": "stimuli_face/k06.mp4"
+    }
+   },
+   "duration_s": 15.68,
+   "fps": 25,
+   "width": 480,
+   "height": 480,
+   "speaker_width": 480,
+   "speaker_height": 480
+  },
+  {
+   "id": "s09",
+   "part": "F",
+   "group": "g01",
+   "role": "study",
+   "rotation_set": "rF",
+   "slot": 1,
+   "sides": {
+    "1": {
+     "left": "stimuli_face/r09_a.mp4",
+     "right": "stimuli_face/r09_b.mp4",
+     "speaker": "stimuli_face/k01.mp4"
+    },
+    "2": {
+     "left": "stimuli_face/r09_b.mp4",
+     "right": "stimuli_face/r09_a.mp4",
+     "speaker": "stimuli_face/k01.mp4"
+    }
+   },
+   "duration_s": 15.68,
+   "fps": 25,
+   "width": 480,
+   "height": 480,
+   "speaker_width": 480,
+   "speaker_height": 480
+  },
+  {
+   "id": "s10",
+   "part": "F",
+   "group": "g03",
+   "role": "study",
+   "rotation_set": "rF",
+   "slot": 1,
+   "sides": {
+    "1": {
+     "left": "stimuli_face/r10_a.mp4",
+     "right": "stimuli_face/r10_b.mp4",
+     "speaker": "stimuli_face/k05.mp4"
+    },
+    "2": {
+     "left": "stimuli_face/r10_b.mp4",
+     "right": "stimuli_face/r10_a.mp4",
+     "speaker": "stimuli_face/k05.mp4"
+    }
+   },
+   "duration_s": 15.68,
+   "fps": 25,
+   "width": 480,
+   "height": 480,
+   "speaker_width": 480,
+   "speaker_height": 480
+  },
+  {
+   "id": "s11",
+   "part": "F",
+   "group": "g03",
+   "role": "study",
+   "rotation_set": "rF",
+   "slot": 0,
+   "sides": {
+    "1": {
+     "left": "stimuli_face/r11_a.mp4",
+     "right": "stimuli_face/r11_b.mp4",
+     "speaker": "stimuli_face/k05.mp4"
+    },
+    "2": {
+     "left": "stimuli_face/r11_b.mp4",
+     "right": "stimuli_face/r11_a.mp4",
+     "speaker": "stimuli_face/k05.mp4"
+    }
+   },
+   "duration_s": 15.68,
+   "fps": 25,
+   "width": 480,
+   "height": 480,
+   "speaker_width": 480,
+   "speaker_height": 480
+  },
+  {
+   "id": "s12",
+   "part": "F",
+   "group": "g06",
+   "role": "study",
+   "rotation_set": "rF",
+   "slot": 1,
+   "sides": {
+    "1": {
+     "left": "stimuli_face/r12_a.mp4",
+     "right": "stimuli_face/r12_b.mp4",
+     "speaker": "stimuli_face/k02.mp4"
+    },
+    "2": {
+     "left": "stimuli_face/r12_b.mp4",
+     "right": "stimuli_face/r12_a.mp4",
+     "speaker": "stimuli_face/k02.mp4"
+    }
+   },
+   "duration_s": 15.68,
+   "fps": 25,
+   "width": 480,
+   "height": 480,
+   "speaker_width": 480,
+   "speaker_height": 480
+  }
+ ]
+}
