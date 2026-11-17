@@ -1,6 +1,6 @@
 # Modular Reactor User Study
 
-A short online study (about 20 minutes) in which participants compare pairs of short animations of people reacting to each other.
+A short online study (about 6 minutes) in which participants compare pairs of animated faces reacting to a person speaking.
 Everything here is plain HTML, CSS and JavaScript: no server, no framework, no tracking.
 
 Study page: **https://abh2024.github.io/modular_reactor_us/**
@@ -8,32 +8,26 @@ Study page: **https://abh2024.github.io/modular_reactor_us/**
 ## What a participant sees
 
 1. A front page with a short description and one line of information; one checkbox to take part.
-2. **Part A** (no sound): pairs of animations of two 3D characters. The blue character is the same in both videos; the yellow one reacts to it.
-   One practice screen, then 12 screens.
-3. A sound check.
-4. **Part B** (sound on): short conversation clips. The recorded partner is shown once on the left ("Speaker"); two versions of the grey
-   reacting character are stacked on the right ("Reactor", top and bottom). 6 screens.
-5. **Part C** (sound on): the same clips with the faces in close-up. 6 screens.
-6. A thank-you page.
+2. A sound check.
+3. Six comparisons: the recorded partner is shown once on the left with both voices ("Speaker"); two versions of a grey face mask,
+   always facing forward, are stacked on the right ("Reactor", top and bottom). For each pair the participant answers which face
+   reacts better to the partner and which face moves more naturally: top, bottom, or "no clear difference". The buttons unlock once
+   each face has been played to the end.
+4. A thank-you page.
 
-On every screen the participant answers two questions, each with three buttons: which version reacts more appropriately, and which one
-moves more naturally (left / right, or top / bottom, or "no clear difference"). The buttons unlock once each video has been played to the end.
+An earlier three-part study (bodies and faces) ran on this address until 16 November 2026; its files remain in the repository
+(`config_all.json`, `stimuli/`, `stimuli_partBC/`) but are no longer served as the study page.
 
 ## Files
 
 | File or folder | What it is |
 |---|---|
-| `index.html` | the study page (entry point) |
-| `app.js` | the page logic: screens, playback, answers, saving |
-| `style.css` | the look of the page |
-| `config_all.json` | every text shown on the page and the design settings (order of the parts, questions, answers) |
-| `stimuli_index_all.json` | the list of screens: which video files are shown together |
-| `manifest_all.json` | the list of all files with their checksums (the page records the version it ran) |
-| `stimuli/` | the Part A videos |
-| `stimuli_partBC/` | the Part B and C videos and the sound check |
+| `index.html` | the study page (entry point): the face study |
+| `config_face.json`, `stimuli_index_face.json`, `manifest_face.json`, `stimuli_face/` | texts, screens, checksums and videos of the face study |
+| `app.js`, `style.css` | the page logic and look (shared by both studies) |
+| `index_face.html` | the same page under its former name |
+| `config_all.json`, `stimuli_index_all.json`, `manifest_all.json`, `stimuli/`, `stimuli_partBC/` | the earlier three-part study, kept for the record |
 | `.nojekyll` | tells GitHub Pages to serve the files as they are |
-
-Video file names are neutral on purpose (`v01_a.mp4`, `r03_b.mp4`, `k05.mp4`): the page does not reveal which version is which.
 
 ## How the comparisons are assigned
 
