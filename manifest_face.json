@@ -1,12 +1,12 @@
 {
- "study_version": "v1-face-2026-11-16",
- "instrument_sha256": "be6aa553ad958d6a9667c21b866b08cecdce3679de64c5cbbd926e2ff8874538",
+ "study_version": "v2-face-2026-11-18",
+ "instrument_sha256": "42f1132b1f2fe35ba7168343b63e6fff59b22c5a5b6a2be8a703251fe9091868",
  "n_files": 36,
  "files": {
   "index_face.html": "0625ec13f44b423a37bc381945b4fdb970531f959f8244691a0466a29c482b17",
   "app.js": "9f96111224801bde30535d3957df95ef49c2903778f6142e9c362fd43056ea74",
   "style.css": "661761b841f9c8836fa6802b09d74cc62eb7d9cc1d0a02d7d41e029608d3273c",
-  "config_face.json": "585c73b0aa1adcf6c8f06365819996e3f70926e974bb4dfcef144c08eda596d2",
+  "config_face.json": "3dfae95c92c774a2d13581b97eaaf9541577a9a3180e1ee4333dfdfb6d992689",
   "stimuli_index_face.json": "d71f2c0c37a62443729c19a00fa37cfdc1eaef3979ff356733419827cc2c39b0",
   "stimuli_face/sound_check.m4a": "1d986ea50f0bd8bd752326956ef2b246e52b15ae58ece3269314790ef8593094",
   "stimuli_face/k01.mp4": "d4a906a411b35902d03076073410b64b93bbd3569fe21cd7359f1c93d6ef6d38",

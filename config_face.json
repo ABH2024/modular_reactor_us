@@ -1,5 +1,5 @@
 {
-  "study_version": "v1-face-2026-11-16",
+  "study_version": "v2-face-2026-11-18",
   "consent_version": "consent-final-c7449313856d-face",
   "title": "Modular Reactor User Study: faces",
   "stimuli_index": "stimuli_index_face.json",
@@ -160,13 +160,18 @@
       "questions": [
         {
           "id": "q1_response",
-          "text": "Which face reacts **better** to the partner, while listening and while speaking?",
+          "text": "Which face is the **more appropriate** reaction to the partner, while listening and while speaking?",
           "hint": "Expressions at the right moment; a face alive with its own voice."
         },
         {
           "id": "q2_natural",
           "text": "Which face moves **more naturally**?",
           "hint": "Smooth expressions, no frozen or jerky face; the mouth follows the voice."
+        },
+        {
+          "id": "q3_lips",
+          "text": "When the grey person speaks, which mouth **follows the voice** better?",
+          "hint": "Lips opening and closing with the words."
         }
       ]
     }
